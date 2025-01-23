@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="NoteBlocks" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 1em;
+            color: #c7254e;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>API Documentation</h1>
+        <p>This document provides details about the methods available at <code>project/API/Developer/</code>.</p>
+
+        <h2>Endpoint</h2>
+        <p><code>GET /project/API/Developer/fetch.php</code></p>
+
+        <h2>Headers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Header</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Content-Type</td>
+                    <td>application/json</td>
+                    <td>Yes</td>
+                    <td>Specifies the content type of the response.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Query Parameters</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>token</code></td>
+                    <td>string</td>
+                    <td>Yes</td>
+                    <td>The developer token to authenticate the user.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Response</h2>
+        <p>The API returns a JSON response with the following structure:</p>
+        <pre>{
+    "status": "success",
+    "user": {
+        "username": "<username>",
+        "email": "<email>"
+    },
+    "notes": [
+        {
+            "id": "<note_id>",
+            "text": "<note_text>",
+            "dateCreated": "<date_created>",
+            "dateModified": "<date_modified>",
+            "highlighted": true/false
+        }
+    ]
+}</pre>
+
+        <h3>Response Fields</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>status</code></td>
+                    <td>string</td>
+                    <td>Indicates the status of the request (e.g., "success").</td>
+                </tr>
+                <tr>
+                    <td><code>user</code></td>
+                    <td>object</td>
+                    <td>Contains details about the authenticated user.</td>
+                </tr>
+                <tr>
+                    <td><code>notes</code></td>
+                    <td>array</td>
+                    <td>List of notes associated with the user.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Error Responses</h2>
+        <p>If the request fails, the API returns a JSON response with an appropriate error message. Example:</p>
+        <pre>{
+    "status": "failure",
+    "message": "<error_message>"
+}</pre>
+
+        <h3>Common Error Messages</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Message</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>failure</code></td>
+                    <td>Developer token is required</td>
+                    <td>The <code>token</code> parameter is missing from the request.</td>
+                </tr>
+                <tr>
+                    <td><code>failure</code></td>
+                    <td>Invalid or expired developer token</td>
+                    <td>The provided <code>token</code> is invalid or has expired.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Example Request</h2>
+        <pre>GET /project/API/Developer/fetch.php?token=YOUR_USER_TOKEN</pre>
+
+        <h2>Example Success Response</h2>
+        <pre>{
+    "status": "success",
+    "user": {
+        "username": "johndoe",
+        "email": "johndoe@example.com"
+    },
+    "notes": [
+        {
+            "id": "37B6B40B-4840-4B9F-9912-DB3B07D73084",
+            "text": "Sample note",
+            "dateCreated": "2025-01-01T12:00:00Z",
+            "dateModified": "2025-01-10T12:00:00Z",
+            "highlighted": true
+        }
+    ]
+}</pre>
+
+        <h2>Example Error Response</h2>
+        <pre>{
+    "status": "failure",
+    "message": "Invalid or expired developer token"
+}</pre>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Set the body to fill the viewport height */
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.back-link {
+    top: 100px;
+    left: 100px;
+    display: inline-block;
+    padding: 25px 25px; /* Increase padding for a larger button */
+    background-color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.back-link::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute;
+    top: 50%; /* Adjust to vertically center the arrow */
+    left: 11px; /* Adjust to change the distance between the arrow and text */
+    width: 25px; /* Set the width of the arrow */
+    height: 25px; /* Set the height of the arrow */
+    background-image: url('/project/res/arrow-left.png'); /* Replace with your image path */
+    background-size: contain; /* Ensure the entire image is visible */
+    background-repeat: no-repeat;
+    transform: translateY(-50%); /* Centers the arrow vertically */
+}   
+
+.back-link:hover {
+    transform: scale(1.1);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}   
+
+form {
+    margin: 50px auto;
+    width: 300px;
+    min-height: 400px; /* Use min-height to allow resizing */
+    text-align: center;
+    padding: 60px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    opacity: 0;
+}
+
+.fade-in form {
+    opacity: 1;
+}
+
+.user-name input[type="text"] {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.user-name input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    border-color: #007bff;
+}
+
+/* Modern styling for the save button */
+.save-username-button {
+    padding: 10px 5px;
+    font-size: 14px;
+    color: #fff;
+    background-color: black;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: left 0.05s, background-color 0.3s, color 0.3s;
+}
+
+.save-username-button:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+
+.change-password-container {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.change-password-button {
+    padding: 10px 5px; /* Match the save button's padding */
+    font-size: 14px; /* Match the save button's font size */
+    color: #fff; /* Match the save button's text color */
+    background-color: black; /* Match the save button's background color */
+    border: none; /* Match the save button's border style */
+    border-radius: 25px; /* Match the save button's border radius */
+    cursor: pointer; /* Match the save button's cursor style */
+    transition: left 0.05s, background-color 0.3s, color 0.3s;
+    text-decoration: none; /* Remove the underline below the text */
+    display: inline-block; /* Ensure the button behaves like a block-level element */
+    line-height: 1; /* Ensure consistent vertical alignment */
+}
+
+.change-password-button:hover {
+    background-color: rgb(75, 75, 75); 
+}
+
+
+.developer-token-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.developer-token-button {
+    background-color: black;
+    color: white;
+    border: none; /* Remove any borders */
+    padding: 10px 10px; /* Match padding with the delete button */
+    border-radius: 50px; /* Keep the rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Remove the underline below the text */
+    font-size: 14px; /* Adjust font size to match the delete button */
+}
+
+.developer-token-button:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+
+
+.notes {
+    flex-grow: 1; /* Allow the container to grow */
+    width: 100%; 
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 7px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable scrolling when needed */
+    max-height: 400px; /* Constrain max height */
+    height: auto; /* Allow automatic height */
+    transition: height 0.3s ease; /* Smooth resizing effect */
+}
+
+/* Individual Note Styling */
+.note {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
+
+.note p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+.note small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+
+.delete-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; 
+}
+
+
+.delete-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 10px; 
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.delete-button:hover {
+    background-color: rgb(75, 75, 75);
+}
+
+
+@media screen and (max-width: 700px) {
+    .back-link {
+        top: 20px; 
+        left: 10px; 
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    .notes {
+        padding: 5px;
+    }
+}
+
+
+
+
+

@@ -1,0 +1,313 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Set the body to fill the viewport height */
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+
+.welcome {
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 5px;
+    text-align: center;
+    width: 90%;
+    z-index: 0;
+    margin: 100px auto 10px; /* Add margin to center and create space from the top */
+}
+
+
+.logout {
+    background: blue; /* Initial background color */
+    color: rgb(29, 29, 29);;
+    padding: 8px 16px;
+    margin-right: 2px;
+    text-decoration: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    top: 10px; /* Adjust top position */
+    left: 50px; /* Adjust left position */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+    background-image: url('../res/logout-icon.png');
+    background-size: 20%; /* Adjust the size of the image */
+    background-repeat: no-repeat;
+    background-color: #f7f6ff;
+    background-position: right 80px center; /* Position the image to the right with some padding */
+    padding-left: 35px; /* Adjust spacing to accommodate the image */
+    transition: opacity 0.3s, box-shadow 0.3s, background-color 0.3s, background-position 0.3s; /* Transition for opacity change */
+    opacity: 0;
+}
+
+/* Button hover styles */
+.logout:hover {
+    background-color: white; /* Change background color on hover */ /* Change text color on hover */
+    background-position: 0;
+}
+
+
+.profile {
+    background: black; /* Initial background color */
+    color: white;
+    padding: 8px 16px;
+    margin-right: 2px;
+    text-decoration: none;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    top: 10px; /* Adjust top position */
+    left: 50px; /* Adjust left position */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+    background-image: url('../res/profile-icon.png');
+    background-size: 20%; /* Adjust the size of the image */
+    background-repeat: no-repeat;
+    background-position: right 75px center; /* Position the image to the right with some padding */
+    padding-left: 30px; /* Adjust spacing to accommodate the image */
+    opacity: 0;
+}
+
+/* Button hover styles */
+.profile:hover {
+    background-color: rgb(75, 75, 75); /* Change background color on hover */
+}
+
+
+#social {
+    width: 150px; 
+    height: 50px; 
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px; 
+    outline: none;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Add box-shadow to the transition */
+    background: linear-gradient(45deg, #f8fbff, #f7f6ff); 
+    color: rgb(29, 29, 29);
+    box-shadow: 0 4px 6px rgba(76, 76, 76, 0.2); 
+}
+
+#social:hover {
+    box-shadow: 0 8px 12px rgb(255, 255, 255);
+    transform: scale(1.1);
+    color: #b7b7b7;
+}
+
+
+nav {
+    background-color: #ffffff;
+    height: 30px;
+    width: fit-content;
+    text-align: right;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 35px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+nav a {
+    color: rgb(79, 79, 79);
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.1s ease;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .welcome {
+        margin: 10px auto;
+    }
+}
+
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    font-size: 30px;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+
+
+.dropdown-btn {
+    display: none; /* Initially hide the dropdown button on larger screens */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f2f2f2;
+}
+
+/* Display the dropdown menu when the dropdown button is hovered or focused */
+.dropdown-btn:hover + .dropdown-content,
+.dropdown-btn:focus + .dropdown-content {
+    display: block;
+}
+
+
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 150px;
+    right: 150px;
+    width: 55px;
+    height: 55px;
+    background-color: blue;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 2;
+}
+
+.scroll-to-top-btn::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute;
+    top: 50%; /* Adjust to vertically center the arrow */
+    left: 12.5px; /* Adjust to change the distance between the arrow and text */
+    width: 30px; /* Set the width of the arrow */
+    height: 30px;/* Set the height of the arrow */
+    background-image: url('../res/arrow-up.png'); /* Replace with your image path */
+    background-size: contain; /* Ensure the entire image is visible */
+    background-repeat: no-repeat;
+    transform: translateY(-50%); /* Centers the arrow vertically */
+}
+
+.scroll-to-top-btn:hover {
+    background-color: rgb(15, 122, 255);
+    transform: scale(1.1);
+}
+
+
+
+
+/* Media Query for mobile devices */
+@media only screen and (max-device-width: 1000px) {
+    nav {
+        width: 90%;
+        text-align: center;
+        position: static;
+        margin: 10px 30px 10px auto;
+        transform: none;
+    }
+
+    nav a {
+        margin: 0 auto;
+        font-size: 16px;
+    }
+
+    .dropdown-btn {
+        display: inline-block;
+        width: 10%;
+        margin-left: 30px;
+        padding: 5px 5px;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+        border-radius: 30px; 
+        outline: none;
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Add box-shadow to the transition */
+        background: linear-gradient(45deg, #f8fbff, #f7f6ff); 
+        color: rgb(29, 29, 29);
+        box-shadow: 0 4px 6px rgba(76, 76, 76, 0.2); 
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        width: 100%;
+        max-width: 300px; /* Adjust the max-width as needed */
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        margin-top: 10px;
+    }
+
+    .dropdown-btn.active + .dropdown-content {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .dropdown-content a {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+
+    .dropdown-btn.active + .dropdown-content a {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s; /* Adjust the delay as needed for each item */
+    }
+}
+
+/* Media Query for mobile devices */
+@media only screen and (max-width: 700px) {
+    nav {
+        width: 83%;
+        left: auto;
+        transform: none;
+    }
+    .scroll-to-top-btn {
+        display: none;
+    }
+
+    .profile {
+        border-radius: 15px;
+    }
+
+    #social {
+        margin: 0 auto;
+        font-size: 16px;
+        border-radius: 15px;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: row; /* Arrange the sidebar and content side by side */
+        width: 100%; /* Make the content area fill the full width */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        margin-bottom: 20px;
+    }
+
+    .main-content > div {
+        flex: 1; /* Make the content container take the remaining space */
+        width: calc(100% - 220px); /* Adjust for sidebar width */
+        box-sizing: border-box; /* Make sure padding is considered in the width */
+    }
+}

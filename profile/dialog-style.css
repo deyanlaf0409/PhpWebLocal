@@ -1,0 +1,53 @@
+
+
+.confirmation-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.confirmation-dialog p {
+    margin-bottom: 10px;
+}
+
+.confirmation-dialog .btn-container {
+    text-align: center;
+}
+
+.confirmation-dialog .btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.confirmation-dialog .btn.ok {
+    background-color: green;
+    border-radius: 25px;
+    color: white;
+}
+.btn.ok:hover {
+    background-color: rgb(58, 211, 38);
+}
+
+.confirmation-dialog .btn.cancel {
+    background-color: #f2f2f2;
+    border-radius: 25px;
+    color: rgb(29, 29, 29);
+}
+
+
+@media only screen and (max-width: 700px) {
+    .confirmation-dialog {
+        width: 240px; /* Adjust width for mobile devices */
+        height: 85px; /* Adjust height for mobile devices */
+    }
+}

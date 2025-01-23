@@ -1,0 +1,154 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Set the body to fill the viewport height */
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+.back-link {
+  top: 100px;
+  left: 100px;
+  display: inline-block;
+  padding: 25px 25px; /* Increase padding for a larger button */
+  background-color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.back-link::before {
+  content: ""; /* Required for pseudo-elements */
+  position: absolute;
+  top: 50%; /* Adjust to vertically center the arrow */
+  left: 11px; /* Adjust to change the distance between the arrow and text */
+  width: 25px; /* Set the width of the arrow */
+  height: 25px; /* Set the height of the arrow */
+  background-image: url('../res/arrow-left.png'); /* Replace with your image path */
+  background-size: contain; /* Ensure the entire image is visible */
+  background-repeat: no-repeat;
+  transform: translateY(-50%); /* Centers the arrow vertically */
+}
+
+.back-link:hover {
+  transform: scale(1.1);
+}
+
+/* Add a class for the fade-in effect */
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+form {
+  margin: 50px auto;
+  width: 300px;
+  height: 500px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;  
+  opacity: 0; /* Set initial opacity to 0 */
+}
+
+/* Add the fade-in class to the form */
+.fade-in form {
+  opacity: 1;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+input[type="email"]:invalid {
+  border-color: red;
+}
+
+input[type="email"]:invalid::before {
+  content: attr(title);
+  position: absolute;
+  display: none;
+  font-size: 12px;
+  color: red;
+  margin-top: -20px;
+}
+
+input[type="email"]:invalid:hover::before {
+  display: block;
+}
+
+.password-info {
+  font-size: 12px;
+  color: #888;
+  margin-top: -20px;
+}
+
+.checkbox-container {
+  margin-bottom: 20px;
+}
+
+.checkbox-container label {
+  display: inline;
+}
+
+button {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 150px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  transition: left 0.05s, background-color 0.3s, color 0.3s;
+  /*background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
+  background-size: 200%;
+  background-position: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+button:hover {
+  background-color: rgb(58, 211, 38); /* Change background color on hover */
+  color: white; /* Change text color on hover */
+  background-position: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .back-link {
+    top: 20px; 
+    left: 10px; 
+  }
+}

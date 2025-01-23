@@ -1,0 +1,62 @@
+.container {
+    width: 35%; /* Ensures the container takes up 50% of the parent or viewport width */
+    max-width: 600px; /* Optional: Set a maximum width for larger screens */
+    margin: 30px auto 50px auto; /* Center the container */
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    flex-grow: 1;
+}
+
+
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.sub-container {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    font-size: 25px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Adjust for mobile devices */
+@media only screen and (max-width: 700px) {
+
+    .container {
+        max-width: 100%;
+        width: 80%;
+        margin: 3px auto;
+    }
+
+    .sub-container {
+        padding: 15px;
+    }
+
+    .section-header {
+        font-size: 25px;
+    }
+
+    .scroll-to-top-btn {
+        display: none;
+    }
+}
