@@ -22,14 +22,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST["email"];
 
-    // Query the database to get the password for the provided email
-    $query = "SELECT password FROM users WHERE email = $1";
+    $query = "SELECT username FROM users WHERE email = $1";
     $result = pg_query_params($conn, $query, array($email));
 
-    if ($result) {
-        // Fetch the password from the result
-        $row = pg_fetch_assoc($result);
-        $userPassword = $row['password'];
+    if ($row = pg_fetch_assoc($result)) {
+      $username = $row['username']; // Retrieve the username
+    } else {
+      echo "Email not found.";
+      exit; // Stop if the email does not exist in the database
+    }
+
+    // First, delete any existing reset tokens for this user
+    $deleteQuery = "DELETE FROM password_reset_tokens WHERE email = $1";
+    pg_query_params($conn, $deleteQuery, array($email));
+
+    // Generate a secure token
+    $token = bin2hex(random_bytes(32));
+    date_default_timezone_set('Europe/Sofia');
+    $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    // Store the token in the password_reset_tokens table
+    $insertQuery = "INSERT INTO password_reset_tokens (email, token, expiration) VALUES ($1, $2, $3)";
+    pg_query_params($conn, $insertQuery, array($email, $token, $expiration));
+
+        
+        $resetLink = "http://192.168.0.222/project/Login/ResolvePass/reset_password.php?token=$token";
 
         // Send email with the retrieved password
         $mail = new PHPMailer(true);
@@ -71,8 +88,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             h2 {
               color: #333333;
             }
-            .password {
-              font-weight: bold;
+            .reset-button {
+              display: inline-block;
+              background-color: black;
+              color: white !important;
+              padding: 10px 20px;
+              text-decoration: none;
+              border-radius: 25px;
+            }
+            .reset-button:hover {
+              background-color: rgb(75, 75, 75);
             }
               img {
                 max-width: 100px;
@@ -85,11 +110,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="container">
             <h2>Forgotten Password</h2>
             <img src="cid:logo_cid" alt="Verification Image">
-            <p>Hi,<p>
+            <p>Hello ' . htmlspecialchars($username) . ',</p>
 
-            <p>This is the e-mail for retrieving your existing password.<p>
-            <p>Your password is: <span class="password">' . $userPassword . '</span></p>
-            <p>If you wish to change your password, contact our Support team </p>
+            <p>This is the e-mail for changing your existing password.<p>
+            <p>Click on the button below to proceed </p>
+            <a href="' . htmlspecialchars($resetLink) . '" class="reset-button">Reset Password</a>
 
             <br>
             
@@ -105,44 +130,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         echo "success";
-    } else {
-        echo "Error querying the database: " . pg_last_error($conn);
-    }
 }
-
-
-
-/*
-// Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
-
-try {
-    // Server settings
-    $mail->isSMTP();  
-    $mail->SMTPDebug  = 2;  // Enable verbose debug output
-    $mail->Host       = 'smtp.example.com';  // Set the SMTP server to send through
-    $mail->SMTPAuth   = true;  // Enable SMTP authentication
-    $mail->Username   = 'your_username@example.com';  // SMTP username
-    $mail->Password   = 'your_password';  // SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  // Enable TLS encryption
-    $mail->Port       = 587;  // TCP port to connect to: use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-    // Recipients
-    $mail->setFrom('from@example.com', 'Mailer');
-    $mail->addAddress('joe@example.net', 'Joe User');  // Add a recipient
-
-    // Content
-    $mail->isHTML(true);  // Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    // Send the email
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
-*/
 
 ?>

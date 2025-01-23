@@ -16,30 +16,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
 
-        // Verify old password without hashing
+        // Fetch the hashed password for the logged-in user
         $query = $db->prepare('SELECT password FROM users WHERE id = :user_id');
         $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $query->execute();
 
         $user = $query->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $user['password'] === $old_password) { // Plain text comparison
-            // Update to new password
+        if ($user && password_verify($old_password, $user['password'])) {
+            // Old password matches, proceed with updating to the new password
+
+            // Hash the new password
+            $hashedNewPassword = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Update the password in the database
             $update_query = $db->prepare('UPDATE users SET password = :new_password WHERE id = :user_id');
-            $update_query->bindParam(':new_password', $new_password, PDO::PARAM_STR);
+            $update_query->bindParam(':new_password', $hashedNewPassword, PDO::PARAM_STR);
             $update_query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $update_query->execute();
 
-            header("Location: change-password-done.php");
+            // Redirect with success message
+            echo "<script>window.location.href = 'change-password-done.php';</script>";
             exit();
         } else {
-            echo "<p>Old password is incorrect.</p>";
+            // Old password does not match
+            echo "<script>alert('Old password is incorrect.');</script>";
         }
     } catch (PDOException $e) {
-        echo "<p>Error: " . $e->getMessage() . "</p>";
+        echo "<script>alert('Error: " . addslashes($e->getMessage()) . "');</script>";
     }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
