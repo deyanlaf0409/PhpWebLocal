@@ -47,8 +47,10 @@ function checkRegister(event) {
                 if (response.trim() === "success") {
                     // Send verification email after successful registration
                     sendVerificationEmail(email);
-                } else if (response.trim() === "user_exists") {
+                } else if (response.trim() === "email_exists") {
                     alert("Email is already registered. Please use a different email.");
+                } else if (response.trim() === "username_exists") {
+                    alert("Username is already taken. Please choose a different username.");
                 } else if(response.trim() === "failure"){
                     alert("Registration failed. Please try again later.");
                 }
