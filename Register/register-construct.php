@@ -20,8 +20,9 @@
   <form class="fade-in" id="reg-form" enctype="multipart/form-data">
     <h1>Register</h1>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
+    <label for="username"></label>
+    <input type="text" id="username" name="username" maxlength="20" placeholder="Enter your username">
+
 
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" title="Please enter a valid email address">

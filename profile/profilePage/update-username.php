@@ -11,6 +11,11 @@ require '../../conn_db.php';
 $newUsername = trim($_POST['new_username']);
 $currentUsername = $_SESSION['username'];
 
+if (strlen($newUsername) > 20) {
+    echo "Username cannot exceed 20 characters.";
+    exit();
+}
+
 if ($newUsername === $currentUsername) {
     echo "<script>alert('The new username is the same as the current username. Please choose a different one.'); window.location.href = 'profile-page.php';</script>";
     exit();

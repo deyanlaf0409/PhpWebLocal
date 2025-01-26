@@ -30,7 +30,7 @@
         if (isset($_SESSION['username'])) {
             $username = $_SESSION['username'];
             $user_id = $_SESSION['id'];
-            echo '<input type="text" name="new_username" value="' . htmlspecialchars($username) . '" required>';
+            echo '<input type="text" name="new_username" maxlength="20" value="' . htmlspecialchars($username) . '" required>';
         } else {
             header("Location: /project/Login/construct.php");
             exit();
@@ -104,6 +104,12 @@
             if (currentUsername === newUsername) {
                 event.preventDefault(); // Prevent form submission
                 //alert("The new username is the same as the current username. Please choose a different one.");
+            }
+
+            if (newUsername.length > 20) {
+                event.preventDefault(); // Prevent form submission
+                alert("The username cannot exceed 20 characters. Please choose a shorter username.");
+                return;
             }
         });
     </script>

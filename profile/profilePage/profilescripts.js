@@ -20,3 +20,5 @@ document.getElementById("cancelDelete").addEventListener('click', function () {
     // If user clicks "Cancel", hide confirmation dialog
     document.getElementById("confirmationDialog").style.display = "none";
 });
+
+

@@ -13,6 +13,13 @@ function checkRegister(event) {
         return false;
     }
 
+    console.log("Username entered:", username); // Add this line for debugging
+    if (username.length > 20) {
+        alert("Username is too long");
+        return false;
+    }
+
+
     if (!document.getElementById("email").checkValidity() || !emailRegex.test(email)) {
         console.log(email);
         alert("Please enter a valid email address.");
