@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/project/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/project/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/project/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/project/favicons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="NoteBlocks" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href="/project/favicons/site.webmanifest" />
     <title>API Documentation</title>
     <style>
         body {
@@ -103,6 +103,12 @@
                     <td>Yes</td>
                     <td>The developer token to authenticate the user.</td>
                 </tr>
+                <tr>
+                    <td><code>folderName</code></td>
+                    <td>string</td>
+                    <td>No</td>
+                    <td>The name of the folder to filter notes by. If omitted, all notes are returned.</td>
+                </tr>
             </tbody>
         </table>
 
@@ -120,7 +126,8 @@
             "text": "<note_text>",
             "dateCreated": "<date_created>",
             "dateModified": "<date_modified>",
-            "highlighted": true/false
+            "highlighted": true/false,
+            "folderName": "<folder_name>"
         }
     ]
 }</pre>
@@ -186,6 +193,9 @@
         <h2>Example Request</h2>
         <pre>GET /project/API/Developer/fetch.php?token=YOUR_USER_TOKEN</pre>
 
+        <h2>Example Request with Folder Filter</h2>
+        <pre>GET /project/API/Developer/fetch.php?token=YOUR_USER_TOKEN&folderName=Work</pre>
+
         <h2>Example Success Response</h2>
         <pre>{
     "status": "success",
@@ -199,7 +209,8 @@
             "text": "Sample note",
             "dateCreated": "2025-01-01T12:00:00Z",
             "dateModified": "2025-01-10T12:00:00Z",
-            "highlighted": true
+            "highlighted": true,
+            "folderName": "Work"
         }
     ]
 }</pre>

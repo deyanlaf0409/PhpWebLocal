@@ -19,6 +19,7 @@ ini_set('display_errors', 1);
 
 // Check if the token is provided via GET request
 $token = $_GET['token'] ?? null;
+$folderName = $_GET['folderName'] ?? null; // Get folderName parameter if provided
 
 if (!$token) {
     echo json_encode(['status' => 'failure', 'message' => 'Developer token is required']);
@@ -38,9 +39,33 @@ if (pg_num_rows($resultToken) === 0) {
 $user_row = pg_fetch_assoc($resultToken);
 $user_id = $user_row['id'];
 
-// Fetch notes for the user
-$sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted FROM data WHERE user_id = $1";
-$resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
+// Build the base SQL query
+$sqlNotes = "
+    SELECT 
+        data.note_id, 
+        data.text, 
+        data.date_created, 
+        data.date_modified, 
+        data.highlighted, 
+        folders.name AS folder_name 
+    FROM 
+        data 
+    LEFT JOIN 
+        folders ON data.folder_id = folders.id 
+    WHERE 
+        data.user_id = $1";
+
+// If folderName is provided, add a condition to filter by folder name
+if ($folderName) {
+    $sqlNotes .= " AND folders.name = $2";
+}
+
+// Execute the query with the appropriate parameters
+if ($folderName) {
+    $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id, $folderName));
+} else {
+    $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
+}
 
 $notes = [];
 while ($note_row = pg_fetch_assoc($resultNotes)) {
@@ -49,7 +74,8 @@ while ($note_row = pg_fetch_assoc($resultNotes)) {
         'text' => $note_row['text'],
         'dateCreated' => $note_row['date_created'],
         'dateModified' => $note_row['date_modified'],
-        'highlighted' => $note_row['highlighted'] === 't' // Convert to boolean
+        'highlighted' => $note_row['highlighted'] === 't', // Convert to boolean
+        'folderName' => $note_row['folder_name'] // Include folder name
     ];
 }
 
