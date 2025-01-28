@@ -24,18 +24,18 @@
         </h1>
 
         <h2 class="user-name">
-        <?php
-        session_start();
+            <?php
+            session_start();
 
-        if (isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
-            $user_id = $_SESSION['id'];
-            echo '<input type="text" name="new_username" maxlength="20" value="' . htmlspecialchars($username) . '" required>';
-        } else {
-            header("Location: /project/Login/construct.php");
-            exit();
-        }
-        ?>
+            if (isset($_SESSION['username'])) {
+                $username = $_SESSION['username'];
+                $user_id = $_SESSION['id'];
+                echo '<input type="text" name="new_username" maxlength="20" value="' . htmlspecialchars($username) . '" required>';
+            } else {
+                header("Location: /project/Login/construct.php");
+                exit();
+            }
+            ?>
         </h2>
         <button type="submit" class="save-username-button">Save Username</button>
 
@@ -48,13 +48,50 @@
         <div class="developer-token-container">
             <a href="Developer/token.php" class="developer-token-button">Developer Token</a>
         </div>
-        
+
         <div class="delete-container">
             <button class="delete-button" id="delete">Delete Account</button>
         </div>
 
+        <div class="folder-dropdown-container">
+            <label for="folder-select">Select Folder:</label>
+            <select id="folder-select" name="folder_id" onchange="filterNotes()">
+                <option value="all" selected>All</option>
+                <?php
+                include '../../conn_db.php';
+
+                try {
+                    $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+
+                    // Fetch the user's folders
+                    $query = $db->prepare('SELECT id, name FROM folders WHERE user_id = :user_id');
+                    $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                    $query->execute();
+
+                    $folders = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                    if ($folders) {
+                        foreach ($folders as $folder) {
+                            echo "<option value='" . htmlspecialchars($folder['id']) . "'>" . htmlspecialchars($folder['name']) . "</option>";
+                        }
+                    }
+                } catch (PDOException $e) {
+                    echo "<p>Error fetching folders: " . $e->getMessage() . "</p>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="create-folder-container">
+            <button class="create-folder-button" id="create-folder">+ Create Folder</button>
+        </div>
+
+        <div class="delete-folder-container" style="display: none;">
+            <button id="delete-folder" onclick="deleteFolder()">- Delete Folder</button>
+        </div>
+
         <h3 style="text-align: left;">My Notes:</h3>
-        <div class="notes">
+        <div class="notes" id="folder-notes">
             <?php
             include '../../conn_db.php';
 
@@ -85,7 +122,6 @@
             }
             ?>
         </div>
-
     </form>
 
     <?php include '../../master/footer.php'; ?>
@@ -94,9 +130,7 @@
     <script>
         var form = document.getElementById("success-container");
         form.style.opacity = 1;
-    </script>
 
-    <script>
         document.getElementById("success-container").addEventListener("submit", function(event) {
             const currentUsername = "<?php echo htmlspecialchars($username); ?>";
             const newUsername = document.querySelector('input[name="new_username"]').value;
@@ -112,8 +146,44 @@
                 return;
             }
         });
-    </script>
 
+        function filterNotes() {
+
+            const folderId = document.getElementById("folder-select").value;
+            const deleteFolderContainer = document.querySelector(".delete-folder-container");
+            //console.log("Selected folder ID:", folderId);
+            //console.log("Delete folder container:", deleteFolderContainer.style.display);
+
+
+            // Show the delete folder button if a specific folder is selected
+            deleteFolderContainer.style.display = folderId === "all" ? "none" : "block";
+
+            fetch(`Folders/load-notes.php?folder_id=${folderId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("folder-notes").innerHTML = data;
+            })
+            .catch(error => console.error('Error fetching notes:', error));
+        }
+
+
+        function deleteFolder() {
+            const folderId = document.getElementById("folder-select").value;
+
+            if (confirm("Are you sure you want to delete this folder and all its notes?")) {
+                fetch(`Folders/delete-folder.php?folder_id=${folderId}`, {
+                    method: 'POST',
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    // Reload the page or refetch the folders and notes
+                    location.reload();
+                })
+                .catch(error => console.error('Error deleting folder:', error));
+            }
+        }
+    </script>
 
     <script src="profilescripts.js"></script>
 
