@@ -43,6 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['email'] = $email;
                 $_SESSION['id'] = $user_id;
 
+                // Update last_logged_in with only the current date
+                $update_sql = "UPDATE users SET last_logged = CURRENT_DATE WHERE id = $1";
+                pg_query_params($conn, $update_sql, array($user_id));
+
                 // Check if request is from the app
                 if (isset($_POST['AppRequest']) && $_POST['AppRequest'] === 'true') {
                     // Fetch all user notes
