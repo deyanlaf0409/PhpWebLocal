@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (pg_num_rows($resultUser) > 0) {
         $user_row = pg_fetch_assoc($resultUser);
 
-        // Fetch notes for the user
-        $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted FROM data WHERE user_id = $1";
+        // Fetch notes along with folder_id for the user
+        $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted, folder_id FROM data WHERE user_id = $1";
         $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
 
         $notes = [];
@@ -50,11 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'text' => $note_row['text'],
                 'dateCreated' => $note_row['date_created'],
                 'dateModified' => $note_row['date_modified'],
-                'highlighted' => $note_row['highlighted'] === 't' // Convert to boolean
+                'highlighted' => $note_row['highlighted'] === 't', // Convert to boolean
+                'folderId' => $note_row['folder_id'] // Add folder_id to the note data
             ];
         }
 
-        // Return user info and notes as JSON
+        // Return user info and notes (with folder_id) as JSON
         echo json_encode([
             'status' => 'success',
             'user' => [
