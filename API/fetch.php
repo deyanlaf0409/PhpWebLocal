@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_row = pg_fetch_assoc($resultUser);
 
         // Fetch notes along with folder_id for the user
-        $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted FROM data WHERE user_id = $1";
+        $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted, folder_id FROM data WHERE user_id = $1";
         $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
 
         $notes = [];
@@ -51,10 +51,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'dateCreated' => $note_row['date_created'],
                 'dateModified' => $note_row['date_modified'],
                 'highlighted' => $note_row['highlighted'] === 't', // Convert to boolean
+                'folderId' => $note_row['folder_id']
             ];
         }
 
-        // Return user info and notes (with folder_id) as JSON
+        // Fetch folders for the user
+        $sqlFolders = "SELECT id, name FROM folders WHERE user_id = $1";
+        $resultFolders = pg_query_params($conn, $sqlFolders, array($user_id));
+
+        $folders = [];
+        while ($folder_row = pg_fetch_assoc($resultFolders)) {
+            $folders[] = [
+                'id' => $folder_row['id'],
+                'name' => $folder_row['name']
+            ];
+        }
+
+        // Return user info, notes, and folders as JSON
         echo json_encode([
             'status' => 'success',
             'user' => [
@@ -62,7 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'username' => $user_row['username'],
                 'email' => $user_row['email']
             ],
-            'notes' => $notes
+            'notes' => $notes,
+            'folders' => $folders // Include folders in the response
         ]);
     } else {
         echo json_encode(['status' => 'failure', 'message' => 'User not found']);

@@ -94,6 +94,7 @@ function checkLogin(event) {
           var username = data.username;
           var userId = data.user_id;
           var notesData = data.notes;
+          var folders = data.folders;
           var notesText = 'Your Notes:\n';
 
           notesData.forEach(function(note) {
@@ -107,11 +108,14 @@ function checkLogin(event) {
           });
           alert('Welcome,' + username + userId + notesText);
           const notesJSON = JSON.stringify(notesData);
+          const foldersJSON = JSON.stringify(folders);
 
-          const utf8Bytes = new TextEncoder().encode(notesJSON); // Encode as UTF-8 bytes
-          const notesBase64 = btoa(String.fromCharCode(...utf8Bytes));
+          const utf8Bytesnotes = new TextEncoder().encode(notesJSON);
+          const utf8Bytesfolders = new TextEncoder().encode(foldersJSON); // Encode as UTF-8 bytes
+          const notesBase64 = btoa(String.fromCharCode(...utf8Bytesnotes));
+          const foldersBase64 = btoa(String.fromCharCode(...utf8Bytesfolders));
 
-          const deepLink = `latenightnotes://auth?status=success&username=${encodeURIComponent(username)}&user_id=${encodeURIComponent(userId)}&notes=${encodeURIComponent(notesBase64)}`;
+          const deepLink = `latenightnotes://auth?status=success&username=${encodeURIComponent(username)}&user_id=${encodeURIComponent(userId)}&notes=${encodeURIComponent(notesBase64)}&folders=${encodeURIComponent(foldersBase64)}`;
           window.location.href = deepLink;
         }else if (response.trim() === "success") {
           window.location.href = "/project/profile/user-page.php";

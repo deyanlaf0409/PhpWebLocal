@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Check if request is from the app
                 if (isset($_POST['AppRequest']) && $_POST['AppRequest'] === 'true') {
                     // Fetch all user notes
-                    $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted FROM data WHERE user_id = $1";
+                    $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted, folder_id FROM data WHERE user_id = $1";
                     $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
 
                     $notes = [];
@@ -60,17 +60,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             'text' => $note_row['text'],
                             'dateCreated' => $note_row['date_created'],
                             'dateModified' => $note_row['date_modified'],
-                            'highlighted' => $note_row['highlighted']
+                            'highlighted' => $note_row['highlighted'],
+                            'folderId' => $note_row['folder_id']
                         ];
                     }
 
-                    // Return JSON response with user info and notes
+                    // Fetch all user folders
+                    $sqlFolders = "SELECT id, name FROM folders WHERE user_id = $1";
+                    $resultFolders = pg_query_params($conn, $sqlFolders, array($user_id));
+                    
+                    $folders = [];
+                    while ($folder_row = pg_fetch_assoc($resultFolders)) {
+                        $folders[] = [
+                            'id' => $folder_row['id'],
+                            'name' => $folder_row['name']
+                        ];
+                    }
+                    
+                    // Return JSON response with user info, notes, and folders
                     header('Content-Type: application/json');
                     echo json_encode([
                         'status' => 'success',
                         'username' => $username,
                         'user_id' => $user_id,
-                        'notes' => $notes
+                        'notes' => $notes,
+                        'folders' => $folders
                     ]);
                     exit;
                 } else {
