@@ -52,6 +52,8 @@
         </div>
     </div>
 
+    <button id="scrollToTopBtn" class="scroll-to-top-btn"></button>
+    
     <?php include 'dialog-out.html'; ?>
     <?php include '../master/footer.php'; ?>
 

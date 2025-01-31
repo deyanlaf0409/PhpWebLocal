@@ -124,6 +124,8 @@
         </div>
     </form>
 
+    <button id="scrollToTopBtn" class="scroll-to-top-btn"></button>
+
     <?php include '../../master/footer.php'; ?>
     <?php include 'delete-dialog.html'; ?>
 

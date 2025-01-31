@@ -140,6 +140,45 @@ nav a {
 
 
 
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 150px;
+    right: 295px;
+    width: 55px;
+    height: 55px;
+    background-color: blue;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    z-index: 2;
+    padding: 0; /* Remove any default padding to keep the button tight */
+}
+
+.scroll-to-top-btn::before {
+    content: ""; /* Required for pseudo-elements */
+    position: absolute;
+    top: 50%; /* Adjust to vertically center the arrow */
+    left: 50%; /* Horizontally center the arrow */
+    width: 30px; /* Set the width of the arrow */
+    height: 30px; /* Set the height of the arrow */
+    background-image: url('/project/res/arrow-up.png'); /* Replace with your image path */
+    background-size: contain; /* Ensure the entire image is visible */
+    background-repeat: no-repeat;
+    background-position: center; /* Center the background image */
+    transform: translate(-50%, -50%); /* Center the image both vertically and horizontally */
+}
+
+.scroll-to-top-btn:hover {
+    background-color: rgb(15, 122, 255);
+    transform: scale(1.1);
+}
+
+
+
 .dropdown-btn {
     display: none; /* Initially hide the dropdown button on larger screens */
 }
@@ -171,44 +210,6 @@ nav a {
 .dropdown-btn:focus + .dropdown-content {
     display: block;
 }
-
-
-.scroll-to-top-btn {
-    position: fixed;
-    bottom: 150px;
-    right: 150px;
-    width: 55px;
-    height: 55px;
-    background-color: blue;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    z-index: 2;
-}
-
-.scroll-to-top-btn::before {
-    content: ""; /* Required for pseudo-elements */
-    position: absolute;
-    top: 50%; /* Adjust to vertically center the arrow */
-    left: 12.5px; /* Adjust to change the distance between the arrow and text */
-    width: 30px; /* Set the width of the arrow */
-    height: 30px;/* Set the height of the arrow */
-    background-image: url('../res/arrow-up.png'); /* Replace with your image path */
-    background-size: contain; /* Ensure the entire image is visible */
-    background-repeat: no-repeat;
-    transform: translateY(-50%); /* Centers the arrow vertically */
-}
-
-.scroll-to-top-btn:hover {
-    background-color: rgb(15, 122, 255);
-    transform: scale(1.1);
-}
-
-
 
 
 /* Media Query for mobile devices */
