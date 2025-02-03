@@ -57,7 +57,7 @@
         <div class="folder-dropdown-container">
             <label for="folder-select">Select Folder:</label>
             <select id="folder-select" name="folder_id" onchange="filterNotes()">
-                <option value="allh" selected>All</option>
+                <option value="all" selected>All</option>
                 <?php
                 include '../../conn_db.php';
 
