@@ -10,6 +10,7 @@
     <link rel="manifest" href="/project/favicons/site.webmanifest" />
     <link rel="stylesheet" href="profile-style.css">
     <link rel="stylesheet" href="del-dialog-style.css">
+    <link rel="stylesheet" href="add-dialog-style.css">
     <link rel="stylesheet" href="/project/master/footer-style.css">
 </head>
 <body>
@@ -56,7 +57,7 @@
         <div class="folder-dropdown-container">
             <label for="folder-select">Select Folder:</label>
             <select id="folder-select" name="folder_id" onchange="filterNotes()">
-                <option value="all" selected>All</option>
+                <option value="allh" selected>All</option>
                 <?php
                 include '../../conn_db.php';
 
@@ -128,6 +129,7 @@
 
     <?php include '../../master/footer.php'; ?>
     <?php include 'delete-dialog.html'; ?>
+    <?php include 'add-dialog.html'; ?>
 
     <script>
         var form = document.getElementById("success-container");
@@ -185,6 +187,10 @@
                 .catch(error => console.error('Error deleting folder:', error));
             }
         }
+    </script>
+
+    <script>
+        window.userId = <?php echo json_encode($user_id); ?>;
     </script>
 
     <script src="profilescripts.js"></script>

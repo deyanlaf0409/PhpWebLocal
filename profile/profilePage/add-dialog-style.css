@@ -1,0 +1,57 @@
+
+
+.add-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.add-dialog p {
+    margin-bottom: 10px;
+}
+
+.add-dialog .btn-container {
+    text-align: center;
+}
+
+.add-dialog .btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-dialog .btn.ok {
+    background-color: black;
+    border-radius: 25px;
+    color: white;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+    background-size: 200%;
+    background-position: 100%;
+}
+.btn.ok:hover {
+    background-color: rgb(75, 75, 75); /* Change background color on hover */
+    color: white; /* Change text color on hover */
+}
+
+.add-dialog .btn.cancel {
+    background-color: #f2f2f2;
+    border-radius: 25px;
+    color: rgb(29, 29, 29);
+}
+
+
+@media only screen and (max-width: 700px) {
+    .add-dialog {
+        width: 240px; /* Adjust width for mobile devices */
+        height: 125px; /* Adjust height for mobile devices */
+    }
+}

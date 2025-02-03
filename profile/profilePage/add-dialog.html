@@ -1,0 +1,35 @@
+<div class="add-dialog" id="addDialog">
+    <h3>Add a Note</h3>
+    <label for="folder-select">Select Folder:</label>
+    <select id="folderSelect" name="folder_id">
+        <option value="" selected>None</option>
+        <?php
+        include '../conn_db.php';
+        
+        try {
+            $db = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+            
+            $query = $db->prepare('SELECT id, name FROM folders WHERE user_id = :user_id');
+            $query->bindParam(':user_id', $_SESSION['id'], PDO::PARAM_INT);
+            $query->execute();
+            
+            $folders = $query->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($folders) {
+                foreach ($folders as $folder) {
+                    echo "<option value='" . strtoupper(htmlspecialchars($folder['id'])) . "'>" . htmlspecialchars($folder['name']) . "</option>";
+                }
+            }
+        } catch (PDOException $e) {
+            echo "<p>Error fetching folders: " . $e->getMessage() . "</p>";
+        }
+        ?>
+    </select>
+    
+    <textarea id="note-text" placeholder="Enter your note..."></textarea>
+
+    <div class="btn-container">
+        <button class="btn ok" id="confirmAdd">Add</button>
+        <button class="btn cancel" id="cancelAdd">Cancel</button>
+    </div>
+</div>
