@@ -18,7 +18,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 error_log("Received input JSON: " . var_export($input, true));
 
 // Validate input
-if (!isset($input['id']) || !isset($input['text']) || !isset($input['dateModified']) || !isset($input['highlight']) || !isset($input['folderId'])) {
+if (!isset($input['id']) || !isset($input['text']) || !isset($input['dateModified']) || !isset($input['highlight']) || !isset($input['folderId']) || !isset($input['locked'])) {
     http_response_code(400);
     echo json_encode(['message' => 'Invalid input']);
     exit();
@@ -29,6 +29,7 @@ $text = $input['text'];
 $dateModified = $input['dateModified'];
 $highlighted = $input['highlight'];
 $folderId = $input['folderId'];
+$locked = $input['locked'];
 
 // Debugging logs to check the highlight value and its type
 error_log("Highlight Raw Value: " . var_export($highlighted, true));
@@ -37,6 +38,9 @@ error_log("Highlight Type: " . gettype($highlighted));
 // Ensure highlight is converted to a boolean, just to be safe
 $highlighted = $highlighted ? 'true' : 'false';
 error_log("Converted Highlight Value: " . $highlighted);
+
+$locked = $locked ? 'true' : 'false';
+error_log("Converted locked Value: " . $locked);
 
 // If folderId is empty, set it to NULL
 if (empty($folderId)) {
@@ -55,8 +59,8 @@ if (!$conn) {
 }
 
 // Prepare the SQL query to update the note
-$query = "UPDATE data SET text = $1, date_modified = $2, highlighted = $3, folder_id = $4 WHERE note_id = $5";
-$params = [$text, $dateModified, $highlighted, $folderId, $id];
+$query = "UPDATE data SET text = $1, date_modified = $2, highlighted = $3, folder_id = $4, locked = $5 WHERE note_id = $6";
+$params = [$text, $dateModified, $highlighted, $folderId, $locked, $id];
 
 // Log the parameters to verify the query
 error_log("Query Parameters: " . var_export($params, true));
