@@ -73,14 +73,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 .button {
                   display: inline-block;
-                  background-color: blue;
+                  background: rgb(254, 220, 0);
                   color: white !important;
+                  transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
+                  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
                   padding: 10px 20px;
                   text-decoration: none;
                   border-radius: 25px;
                 }
                 .button:hover {
-                  background-color: rgb(15, 122, 255);
+                  background-color: orange;
                 }
                   img {
                     max-width: 100px;

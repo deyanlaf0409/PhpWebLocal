@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['token'])) {
         form {
             background-color: white;
             padding: 30px;
-            border-radius: 8px;
+            border-radius: 25px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
@@ -109,17 +109,17 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['token'])) {
         }
 
         button {
-            background: rgb(254, 220, 0);
-            color: black;
+            background: black;
+            color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: rgb(254, 247, 88);
+            background-color: rgb(75, 75, 75);
         }
     </style>
 </head>

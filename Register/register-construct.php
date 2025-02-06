@@ -21,7 +21,7 @@
     <h1>Register</h1>
 
     <label for="username"></label>
-    <input type="text" id="username" name="username" maxlength="20" placeholder="Enter your username">
+    <input type="text" id="username" name="username" maxlength="20" placeholder="Username">
 
 
     <label for="email">Email:</label>

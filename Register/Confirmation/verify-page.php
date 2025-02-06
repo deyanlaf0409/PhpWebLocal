@@ -45,7 +45,7 @@
 
         .btn {
             background: rgb(254, 220, 0); /* Initial background color */
-            color: black;
+            color: white;
             padding: 8px 16px;
             margin-right: 2px;
             text-decoration: none;
@@ -55,13 +55,13 @@
             top: 10px; /* Adjust top position */
             left: 50px; /* Adjust left position */
             transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
-            /*background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
+            background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
             background-size: 200%;
             background-position: 100%;
         }
         .btn:hover {
-            background-color: rgb(254, 247, 88); /* Change background color on hover */
-            color: black; /* Change text color on hover */
+            background-color: orange; /* Change background color on hover */
+            color: white; /* Change text color on hover */
             background-position: 0;
         }
     </style>
