@@ -30,12 +30,15 @@
 }
 
 .confirmation-dialog .btn.ok {
-    background-color: green;
+    background: black;
     border-radius: 25px;
     color: white;
+    background-size: 200%;
+    background-position: 100%;
 }
 .btn.ok:hover {
-    background-color: rgb(58, 211, 38);
+    background-color: rgb(75, 75, 75);
+    background-position: 0;
 }
 
 .confirmation-dialog .btn.cancel {

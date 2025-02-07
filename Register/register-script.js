@@ -53,7 +53,7 @@ function checkRegister(event) {
 
                 if (response.trim() === "success") {
                     // Send verification email after successful registration
-                    sendVerificationEmail(email);
+                    sendVerificationEmail(email, username);
                 } else if (response.trim() === "email_exists") {
                     alert("Email is already registered. Please use a different email.");
                 } else if (response.trim() === "username_exists") {
@@ -77,7 +77,7 @@ function checkRegister(event) {
 }
 
 // Function to send verification email
-function sendVerificationEmail(email) {
+function sendVerificationEmail(email, username) {
     var xhrEmail = new XMLHttpRequest();
     xhrEmail.open("POST", "Confirmation/send_verification.php", true);
 
@@ -106,7 +106,8 @@ function sendVerificationEmail(email) {
     };
 
     // Construct the data as a URL-encoded string
-    var emailData = "email=" + encodeURIComponent(email);
+    var emailData = "email=" + encodeURIComponent(email) + 
+                    "&username=" + encodeURIComponent(username);
 
     xhrEmail.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhrEmail.send(emailData);

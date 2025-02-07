@@ -44,7 +44,7 @@
         }
 
         .btn {
-            background: rgb(254, 220, 0); /* Initial background color */
+            background: black; /* Initial background color */
             color: white;
             padding: 8px 16px;
             margin-right: 2px;
@@ -54,13 +54,11 @@
             cursor: pointer;
             top: 10px; /* Adjust top position */
             left: 50px; /* Adjust left position */
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
-            background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
             background-size: 200%;
             background-position: 100%;
         }
         .btn:hover {
-            background-color: orange; /* Change background color on hover */
+            background-color: rgb(75, 75, 75); /* Change background color on hover */
             color: white; /* Change text color on hover */
             background-position: 0;
         }
@@ -72,7 +70,7 @@
     <form class="fade-in" id="success-container">
         <h1>E-mail has been send</h1>
         <p>Please verify your email within 24 hours.</p>
-        <a href="../../Login/construct.php" class="btn">Login</a>
+        <a href="../../Login/construct.php?AppRequest=true" class="btn">Login</a>
     </form>
 
     <?php include '../../master/footer.php'; ?>

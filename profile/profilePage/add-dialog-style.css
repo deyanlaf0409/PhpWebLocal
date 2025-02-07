@@ -30,7 +30,7 @@
 }
 
 .add-dialog .btn.ok {
-    background-color: black;
+    background-color: orange;
     border-radius: 25px;
     color: white;
     transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
@@ -38,7 +38,7 @@
     background-position: 100%;
 }
 .btn.ok:hover {
-    background-color: rgb(75, 75, 75); /* Change background color on hover */
+    background-color: rgb(255, 99, 0); /* Change background color on hover */
     color: white; /* Change text color on hover */
 }
 

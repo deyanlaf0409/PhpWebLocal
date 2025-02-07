@@ -82,7 +82,7 @@
         }
 
         .generate {
-            background: green;
+            background: orange;
             color: white;
             padding: 8px 16px;
             text-decoration: none;
@@ -94,7 +94,7 @@
         }
 
         .generate:hover {
-            background-color: rgb(58, 211, 38);
+            background-color: rgb(255, 99, 0);
         }
 
         button {

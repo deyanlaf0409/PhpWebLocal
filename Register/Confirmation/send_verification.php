@@ -17,6 +17,7 @@ $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pa
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST["email"];
+    $username = $_POST['username'];
 
     // Query the database to get the password for the provided email
     $query = "SELECT is_verified FROM users WHERE email = $1";
@@ -73,16 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 .button {
                   display: inline-block;
-                  background: rgb(254, 220, 0);
+                  background: blue;
                   color: white !important;
-                  transition: background-color 0.3s, color 0.3s; /* Smooth transition effect */
-                  background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);*/
                   padding: 10px 20px;
                   text-decoration: none;
                   border-radius: 25px;
                 }
                 .button:hover {
-                  background-color: orange;
+                  background-color: rgb(15, 122, 255);
                 }
                   img {
                     max-width: 100px;
@@ -95,6 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="container">
                 <h2>Email Verification</h2>
                  <img src="cid:logo_cid" alt="Verification Image">
+                 <p>Hello ' . htmlspecialchars($username) . ',</p>
+
+                 <p>Thank you for your registration</p>
                 <p>Please click the following button to verify your email:</p>
                 <a class="button" href="' . $verificationLink . '">Verify Email</a>
               </div>

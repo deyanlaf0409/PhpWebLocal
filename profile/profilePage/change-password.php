@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         button {
-            background: rgb(254, 220, 0);
-            color: black;
+            background: orange;
+            color: white;
             padding: 8px 16px;
             text-decoration: none;
             border: none;
@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         button:hover {
-            background-color: rgb(254, 247, 88);
+            background-color: rgb(255, 99, 0);
         }
 
         @media screen and (max-width: 700px) {

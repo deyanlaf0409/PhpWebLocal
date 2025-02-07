@@ -37,7 +37,7 @@
         }
         
         .login {
-    background: rgb(255, 99, 0); /* Darker background by default */
+        background: black;
     color: white;
     padding: 8px 16px;
     margin-right: 2px;
@@ -47,15 +47,13 @@
     cursor: pointer;
     top: 10px;
     left: 50px;
-    transition: background-color 0.3s, color 0.3s;
-    background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.4) 50%);
     background-size: 200%;
     background-position: 100%;
     opacity: 1;
 }
 
 .login:hover {
-    background-color: orange;
+    background-color: rgb(75, 75, 75);
     color: white;
     background-position: 0;
 }
@@ -110,4 +108,3 @@
 
 </body>
 </html>
-

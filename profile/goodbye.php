@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bye Bye !</title>
     <style>
         body {
@@ -63,6 +64,12 @@
             background-color: rgb(255, 97, 97); /* Change background color on hover */
             color: white; /* Change text color on hover */
             background-position: 0;
+        }
+        @media screen and (max-width: 700px) {
+            form {
+                width: 80%; /* Adjust width to 90% for smaller screens */
+                max-width: 350px; /* You can adjust the max width as per your preference */
+            }
         }
     </style>
     <link rel="icon" type="image/x-icon" href="/project/favicon.ico">
