@@ -74,14 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 .button {
                   display: inline-block;
-                  background: blue;
+                  background: orange;
                   color: white !important;
                   padding: 10px 20px;
                   text-decoration: none;
                   border-radius: 25px;
                 }
                 .button:hover {
-                  background-color: rgb(15, 122, 255);
+                  background-color: rgb(255, 99, 0);
                 }
                   img {
                     max-width: 100px;

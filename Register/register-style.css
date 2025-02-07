@@ -132,6 +132,7 @@ button {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  transition: left 0.05s;
   background-size: 200%;
   background-position: 100%;
   left: 50%;

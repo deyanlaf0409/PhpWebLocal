@@ -30,14 +30,14 @@
 }
 
 .confirmation-dialog .btn.ok {
-    background: black;
+    background: orange;
     border-radius: 25px;
     color: white;
     background-size: 200%;
     background-position: 100%;
 }
 .btn.ok:hover {
-    background-color: rgb(75, 75, 75);
+    background-color: rgb(255, 99, 0);
     background-position: 0;
 }
 
