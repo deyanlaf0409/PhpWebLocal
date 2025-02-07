@@ -70,7 +70,7 @@
     <form class="fade-in" id="success-container">
         <h1>Verification Completed</h1>
         <p>You can now log in your account.</p>
-        <a href="../../Login/construct.php?AppRequest=true" class="btn">Login</a>
+        <a href="../../Login/construct.php" class="btn">Login</a>
     </form>
 
     <?php include '../../master/footer.php'; ?>
