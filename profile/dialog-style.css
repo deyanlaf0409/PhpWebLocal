@@ -33,6 +33,7 @@
     background: orange;
     border-radius: 25px;
     color: white;
+    transition: background-color 0.3s, color 0.3s;
     background-size: 200%;
     background-position: 100%;
 }

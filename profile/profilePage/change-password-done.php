@@ -76,7 +76,7 @@
     }
 
     .btn {
-        background: green; /* Initial background color */
+        background: orange; /* Initial background color */
         color: white;
         padding: 5px 13px;
         margin-top: 5px;
@@ -94,7 +94,7 @@
     }
 
     .btn:hover {
-        background-color: rgb(58, 211, 38); /* Change background color on hover */
+        background-color: rgb(255, 99, 0); /* Change background color on hover */
         color: white; /* Change text color on hover */
         background-position: 0;
     }
