@@ -235,8 +235,8 @@ form {
     position: absolute;
     top: 50%; /* Adjust to vertically center the arrow */
     left: 50%; /* Horizontally center the arrow */
-    width: 35px; /* Set the width of the arrow */
-    height: 35px; /* Set the height of the arrow */
+    width: 45px; /* Set the width of the arrow */
+    height: 45px; /* Set the height of the arrow */
     background-image: url('/project/res/plus.png'); /* Replace with your image path */
     background-size: contain; /* Ensure the entire image is visible */
     background-repeat: no-repeat;

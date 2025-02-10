@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         newOption.textContent = folderName;
                         folderSelect.appendChild(newOption);
                         alert("Folder created successfully!");
+                        location.reload();
                     } else {
                         alert("Error creating folder: " + data.error);
                     }

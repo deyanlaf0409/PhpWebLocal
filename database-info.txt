@@ -19,6 +19,8 @@ Indexes:
 Referenced by:
     TABLE "data" CONSTRAINT "data_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "password_reset_tokens" CONSTRAINT "fk_user_id" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+    TABLE "folders" CONSTRAINT "fk_user_id" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
 
 
 
@@ -36,11 +38,13 @@ website=# \d data
  date_modified | timestamp without time zone |           |          | now()
  highlighted   | boolean                     |           |          | false
  folder_id     | uuid                        |           |          | 
+ locked        | boolean                     |           |          | false
 Indexes:
     "data_pkey" PRIMARY KEY, btree (note_id)
 Foreign-key constraints:
     "data_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     "fk_folder" FOREIGN KEY (folder_id) REFERENCES folders(id)
+
 
 
 
@@ -59,6 +63,7 @@ Indexes:
     "password_reset_tokens_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
     "fk_user_id" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+
     
     
     
@@ -74,6 +79,8 @@ website=# \d folders
  name    | character varying(255) |           | not null | 
 Indexes:
     "folders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_user_id" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 Referenced by:
     TABLE "data" CONSTRAINT "fk_folder" FOREIGN KEY (folder_id) REFERENCES folders(id)
 

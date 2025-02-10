@@ -10,7 +10,7 @@ myButton.onmouseover = function (e) {
   var email = document.getElementById("email");
   var password = document.getElementById("password").value;
 
-  if (!email || !password || !email.checkValidity() || password.length < 8) {
+  if (!email.value || !password || !email.checkValidity() || password.length < 8) {
     if (isLeft) {
       xPos = 260;
     } else {
