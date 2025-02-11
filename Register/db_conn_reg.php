@@ -40,8 +40,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $resultRegister = pg_query_params($conn, $sqlRegister, array($username, $email, $hashedPassword));
 
         if ($resultRegister) {
-            // Registration successful
-            echo "success";
+            // Get the ID of the newly inserted user
+            $sqlGetUserId = "SELECT id FROM USERS WHERE email = $1";
+            $resultGetUserId = pg_query_params($conn, $sqlGetUserId, array($email));
+            $user = pg_fetch_assoc($resultGetUserId);
+            $userId = $user['id'];
+
+            // Insert the initial 'Inbox' folder for the new user
+            $sqlInsertFolder = "INSERT INTO folders (user_id, name) VALUES ($1, 'Inbox')";
+            $resultInsertFolder = pg_query_params($conn, $sqlInsertFolder, array($userId));
+
+            if ($resultInsertFolder) {
+                // Folder successfully inserted
+                echo "success";
+            } else {
+                // Folder insertion failed
+                echo "folder_failure";
+            }
         } else {
             // Registration failed
             echo "failure";
