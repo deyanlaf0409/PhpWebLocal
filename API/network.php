@@ -100,16 +100,22 @@ function getUserIdByUsername($conn, $username) {
 }
 
 function acceptFriendRequest($conn, $user_id, $target_id) {
+    // Ensure the friend relationship is inserted in a consistent direction (user1_id < user2_id)
+    $user1 = min($user_id, $target_id);
+    $user2 = max($user_id, $target_id);
+
+    // Using a transaction to ensure both requests are deleted properly and one friendship is created
     $sql = "WITH deleted_request AS (
-        DELETE FROM friend_requests 
-        WHERE (sender_id = $1 AND receiver_id = $2) 
-           OR (sender_id = $2 AND receiver_id = $1) 
-        RETURNING sender_id, receiver_id
-    )
-    INSERT INTO friends (user1_id, user2_id) 
-    SELECT sender_id, receiver_id FROM deleted_request";
+                DELETE FROM friend_requests 
+                WHERE (sender_id = $1 AND receiver_id = $2) 
+                   OR (sender_id = $2 AND receiver_id = $1) 
+                RETURNING sender_id, receiver_id
+            )
+            INSERT INTO friends (user1_id, user2_id) 
+            VALUES ($3, $4)
+            ON CONFLICT (user1_id, user2_id) DO NOTHING";  // Prevent duplicate insertions
     
-    $result = pg_query_params($conn, $sql, [$target_id, $user_id]);
+    $result = pg_query_params($conn, $sql, [$target_id, $user_id, $user1, $user2]);
 
     if ($result) {
         echo json_encode(['status' => 'success', 'message' => 'Friend request accepted']);
@@ -117,6 +123,7 @@ function acceptFriendRequest($conn, $user_id, $target_id) {
         echo json_encode(['status' => 'failure', 'message' => 'Failed to accept request']);
     }
 }
+
 
 function declineFriendRequest($conn, $user_id, $target_id) {
     $sql = "DELETE FROM friend_requests WHERE sender_id = $1 AND receiver_id = $2";
