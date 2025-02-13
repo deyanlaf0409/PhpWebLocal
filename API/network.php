@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'] ?? null; // Authenticated user (sender)
     $target_username = $_POST['target_username'] ?? null; // Username of the target user
 
-    if (!$user_id && $action !== 'list_requests') { 
+    if (!$user_id && $action !== 'list_requests' && $action !== 'count_requests') { 
         echo json_encode(['status' => 'failure', 'message' => 'User ID is required']);
         exit;
     }
@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(['status' => 'failure', 'message' => 'Target Username is required']);
         exit;
     }
-    
 
     switch ($action) {
         case 'send_request':
@@ -45,6 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         case 'list_requests':
             listPendingRequests($conn, $user_id);
+            break;
+        case 'count_requests':
+            countPendingRequests($conn, $user_id);
             break;
         case 'list_friends':
             listFriends($conn, $user_id);
@@ -99,10 +101,13 @@ function getUserIdByUsername($conn, $username) {
 
 function acceptFriendRequest($conn, $user_id, $target_id) {
     $sql = "WITH deleted_request AS (
-                DELETE FROM friend_requests WHERE sender_id = $1 AND receiver_id = $2 RETURNING sender_id, receiver_id
-            )
-            INSERT INTO friends (user1_id, user2_id) 
-            SELECT sender_id, receiver_id FROM deleted_request";
+        DELETE FROM friend_requests 
+        WHERE (sender_id = $1 AND receiver_id = $2) 
+           OR (sender_id = $2 AND receiver_id = $1) 
+        RETURNING sender_id, receiver_id
+    )
+    INSERT INTO friends (user1_id, user2_id) 
+    SELECT sender_id, receiver_id FROM deleted_request";
     
     $result = pg_query_params($conn, $sql, [$target_id, $user_id]);
 
@@ -145,6 +150,21 @@ function listPendingRequests($conn, $user_id) {
     $requests = pg_fetch_all($result) ?: [];
 
     echo json_encode(['status' => 'success', 'pending_requests' => $requests]);
+}
+
+function countPendingRequests($conn, $user_id) {
+    $sql = "SELECT COUNT(*) AS count
+            FROM friend_requests 
+            WHERE receiver_id = $1 AND status = 'pending'";
+    
+    $result = pg_query_params($conn, $sql, [$user_id]);
+    $row = pg_fetch_assoc($result);
+    
+    if ($row) {
+        echo json_encode(['status' => 'success', 'count' => (int)$row['count']]);
+    } else {
+        echo json_encode(['status' => 'failure', 'message' => 'Unable to count requests']);
+    }
 }
 
 function listFriends($conn, $user_id) {
