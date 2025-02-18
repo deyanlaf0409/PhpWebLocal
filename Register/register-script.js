@@ -115,8 +115,30 @@ function sendVerificationEmail(email, username) {
 
 
 
-  
-  
+window.onload = function() {
+    // Check if the previous URL has '?AppRequest=true'
+    var referrer = document.referrer;
+    
+    if (referrer.includes("?AppRequest=true")) {
+        var currentUrl = window.location.href;
+        
+        // Check if the current URL already has query parameters
+        if (currentUrl.indexOf('?') > -1) {
+            // If the URL already has query parameters, append '&AppRequest=true'
+            if (!currentUrl.includes("AppRequest=true")) {
+                currentUrl += "&AppRequest=true";
+            }
+        } else {
+            // If the URL doesn't have query parameters, append '?AppRequest=true'
+            currentUrl += "?AppRequest=true";
+        }
+        
+        // Redirect to the updated URL
+        window.history.replaceState(null, null, currentUrl);
+    }
+};
+
+
   
   
   var registerButton = document.getElementById("register-button");

@@ -13,7 +13,7 @@
             background-color: #f2f2f2;
         }
 
-                /* Add a class for the fade-in effect */
+        /* Add a class for the fade-in effect */
         .fade-in {
             animation: fadeIn 0.5s ease-out;
         }
@@ -68,9 +68,9 @@
 </head>
 <body>
     <form class="fade-in" id="success-container">
-        <h1>E-mail has been send</h1>
+        <h1>E-mail has been sent</h1>
         <p>Please verify your email within 24 hours.</p>
-        <a href="../../Login/construct.php?AppRequest=true" class="btn">Login</a>
+        <a id="login-link" href="../../Login/construct.php" class="btn">Login</a>
     </form>
 
     <?php include '../../master/footer.php'; ?>
@@ -79,6 +79,40 @@
         var form = document.getElementById("success-container");
         // Set form opacity to 1
         form.style.opacity = 1;
+
+        // Check if the previous URL contains '?AppRequest=true'
+        var referrer = document.referrer;
+
+        if (referrer.includes("?AppRequest=true")) {
+            var currentUrl = window.location.href;
+
+            // Check if the current URL already has query parameters
+            if (currentUrl.indexOf('?') > -1) {
+                // If the URL already has query parameters, append '&AppRequest=true'
+                if (!currentUrl.includes("AppRequest=true")) {
+                    currentUrl += "&AppRequest=true";
+                }
+            } else {
+                // If the URL doesn't have query parameters, append '?AppRequest=true'
+                currentUrl += "?AppRequest=true";
+            }
+
+            // Redirect to the updated URL
+            window.history.replaceState(null, null, currentUrl);
+
+            // Now, append the same parameter to the Login link
+            var loginLink = document.getElementById("login-link");
+            var loginHref = loginLink.href;
+
+            // Append '?AppRequest=true' or '&AppRequest=true' to the Login link
+            if (loginHref.indexOf('?') > -1) {
+                if (!loginHref.includes("AppRequest=true")) {
+                    loginLink.href = loginHref + "&AppRequest=true";
+                }
+            } else {
+                loginLink.href = loginHref + "?AppRequest=true";
+            }
+        }
     </script>
 
 </body>
