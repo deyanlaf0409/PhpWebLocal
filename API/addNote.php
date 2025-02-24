@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 $input = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['dateCreated'], $input['dateModified'])) {
+if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['body'], $input['dateCreated'], $input['dateModified'])) {
     http_response_code(400);
     echo json_encode(['message' => 'Invalid input']);
     exit();
@@ -19,6 +19,7 @@ if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['dateCre
 $note_id = $input['note_id'];
 $user_id = $input['user_id'];
 $text = $input['text'];
+$body = $input['body'];
 $dateCreated = $input['dateCreated'];
 $dateModified = $input['dateModified'];
 $folder_id = isset($input['folderId']) && !empty($input['folderId']) ? strtoupper($input['folderId']) : null;
@@ -45,9 +46,9 @@ if ($folder_id) {
     }
 }
 
-$query = "INSERT INTO data (note_id, user_id, text, date_created, date_modified, folder_id) 
-          VALUES ($1, $2, $3, $4, $5, $6)";
-$params = [$note_id, $user_id, $text, $dateCreated, $dateModified, $folder_id];
+$query = "INSERT INTO data (note_id, user_id, text, body, date_created, date_modified, folder_id) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7)";
+$params = [$note_id, $user_id, $text, $body, $dateCreated, $dateModified, $folder_id];
 
 $result = pg_query_params($conn, $query, $params);
 

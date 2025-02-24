@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_row = pg_fetch_assoc($resultUser);
 
         // Fetch notes along with folder_id for the user
-        $sqlNotes = "SELECT note_id, text, date_created, date_modified, highlighted, folder_id, locked FROM data WHERE user_id = $1";
+        $sqlNotes = "SELECT note_id, text, body, date_created, date_modified, highlighted, folder_id, locked FROM data WHERE user_id = $1";
         $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
 
         $notes = [];
@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $notes[] = [
                 'id' => $note_row['note_id'],
                 'text' => $note_row['text'],
+                'body' => $note_row['body'],
                 'dateCreated' => $note_row['date_created'],
                 'dateModified' => $note_row['date_modified'],
                 'highlighted' => $note_row['highlighted'] === 't', // Convert to boolean

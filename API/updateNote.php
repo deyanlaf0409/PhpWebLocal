@@ -18,7 +18,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 error_log("Received input JSON: " . var_export($input, true));
 
 // Validate input
-if (!isset($input['id']) || !isset($input['text']) || !isset($input['dateModified']) || !isset($input['highlight']) || !isset($input['folderId']) || !isset($input['locked'])) {
+if (!isset($input['id']) || !isset($input['text']) || !isset($input['body']) || !isset($input['dateModified']) || !isset($input['highlight']) || !isset($input['folderId']) || !isset($input['locked'])) {
     http_response_code(400);
     echo json_encode(['message' => 'Invalid input']);
     exit();
@@ -26,6 +26,7 @@ if (!isset($input['id']) || !isset($input['text']) || !isset($input['dateModifie
 
 $id = $input['id'];
 $text = $input['text'];
+$body = $input['body'];
 $dateModified = $input['dateModified'];
 $highlighted = $input['highlight'];
 $folderId = $input['folderId'];
@@ -59,8 +60,8 @@ if (!$conn) {
 }
 
 // Prepare the SQL query to update the note
-$query = "UPDATE data SET text = $1, date_modified = $2, highlighted = $3, folder_id = $4, locked = $5 WHERE note_id = $6";
-$params = [$text, $dateModified, $highlighted, $folderId, $locked, $id];
+$query = "UPDATE data SET text = $1, body = $2, date_modified = $3, highlighted = $4, folder_id = $5, locked = $6 WHERE note_id = $7";
+$params = [$text, $body, $dateModified, $highlighted, $folderId, $locked, $id];
 
 // Log the parameters to verify the query
 error_log("Query Parameters: " . var_export($params, true));

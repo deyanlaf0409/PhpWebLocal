@@ -24,7 +24,9 @@ Referenced by:
     TABLE "friends" CONSTRAINT "friends_user1_id_fkey" FOREIGN KEY (user1_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "friends" CONSTRAINT "friends_user2_id_fkey" FOREIGN KEY (user2_id) REFERENCES users(id) ON DELETE CASCADE
 
-website=# \d data
+
+
+website-# \d data 
                                             Table "public.data"
     Column     |            Type             | Collation | Nullable |                Default                
 ---------------+-----------------------------+-----------+----------+---------------------------------------
@@ -36,11 +38,14 @@ website=# \d data
  highlighted   | boolean                     |           |          | false
  folder_id     | uuid                        |           |          | 
  locked        | boolean                     |           |          | false
+ body          | text                        |           | not null | 
 Indexes:
     "data_pkey" PRIMARY KEY, btree (note_id)
 Foreign-key constraints:
     "data_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     "fk_folder" FOREIGN KEY (folder_id) REFERENCES folders(id)
+
+
 
 website=# \d password_reset_tokens
                                         Table "public.password_reset_tokens"
@@ -55,6 +60,8 @@ Indexes:
 Foreign-key constraints:
     "fk_user_id" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
 
+
+
 website=# \d folders
                                      Table "public.folders"
  Column  |          Type          | Collation | Nullable |                Default                
@@ -68,6 +75,8 @@ Foreign-key constraints:
     "fk_user_id" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 Referenced by:
     TABLE "data" CONSTRAINT "fk_folder" FOREIGN KEY (folder_id) REFERENCES folders(id)
+
+
     
 website=# \d friend_requests
                                          Table "public.friend_requests"
@@ -84,6 +93,8 @@ Indexes:
 Foreign-key constraints:
     "friend_requests_receiver_id_fkey" FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
     "friend_requests_sender_id_fkey" FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
+
+
 
 website=# \d friends
                                         Table "public.friends"
