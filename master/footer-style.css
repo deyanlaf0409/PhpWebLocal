@@ -1,0 +1,172 @@
+
+
+.site-footer {
+  -webkit-overflow-scrolling: touch;
+
+  width: 100%;
+  background-color: black;
+  /*background-color: rgb(18, 27, 63);*/
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.5s ease;
+  z-index: 1;
+}
+
+/*
+.blue-section {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15%; 
+  height: 100%;
+  transform: skewX(-30deg); 
+  background-color: black;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  z-index: 100;
+}
+*/
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.logo-container {
+  flex: 1;
+  order: 1;
+  z-index: 1;
+}
+
+/*
+.blue-section .footer-content {
+  z-index: 2;
+}
+*/
+
+.footer-content {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-section {
+  margin-bottom: 20px;
+}
+
+.footer-section h4 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.social-links li {
+  margin-right: 20px;
+}
+
+.social-links li a img {
+  transition: filter 0.3s ease-in-out;
+}
+
+.social-links li a:hover img {
+  filter: brightness(25%);
+}
+
+.services {
+  list-style: none;
+  padding: 0;
+}
+
+.services li {
+  margin-bottom: 10px;
+}
+
+.services a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s ease;
+  display: block;
+}
+
+.services a:hover {
+  color: rgb(40, 40, 40);
+}
+
+.footer-image {
+  text-align: center; /* Centers the image container */
+  margin-bottom: 20px; /* Optional margin for spacing */
+}
+
+.footer-image img {
+  max-width: 100px; /* Adjust this value to make the image smaller */
+  height: auto; /* Ensures the image maintains its aspect ratio */
+  margin: 0 auto; /* Centers the image horizontally */
+  display: block; /* Ensures the image is treated as a block element */
+}
+
+
+.footer-bottom {
+  margin-top: auto;
+  text-align: center;
+  font-size: 14px;
+  z-index: 1;
+}
+
+/* Additional styles for responsiveness */
+@media (max-device-width: 1000px) {
+  .site-footer {
+    width: 100vw;
+  }
+
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .footer-section {
+    text-align: center;
+  }
+
+  .services {
+    text-align: left !important;
+    width: 100%; /* Ensures it spans the full width of its container */
+    padding-left: 20px; /* Optional padding for a consistent appearance */
+  }
+
+  .services li {
+    margin-left: 0 !important; /* Removes unnecessary margin on mobile */
+  }
+
+  .services a {
+    display: inline-block; /* Ensures proper alignment */
+    text-align: left !important; /* Forces left alignment */
+  }
+
+  .social-links {
+      margin-top: 20px;
+  }
+
+  /*
+  .blue-section {
+    transform: skewX(-15deg); 
+  }
+  */
+}
+
+
