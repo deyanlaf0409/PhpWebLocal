@@ -26,7 +26,7 @@ Referenced by:
 
 
 
-website-# \d data 
+website=# \d data
                                             Table "public.data"
     Column     |            Type             | Collation | Nullable |                Default                
 ---------------+-----------------------------+-----------+----------+---------------------------------------
@@ -39,6 +39,7 @@ website-# \d data
  folder_id     | uuid                        |           |          | 
  locked        | boolean                     |           |          | false
  body          | text                        |           | not null | 
+ media         | text                        |           |          | 
 Indexes:
     "data_pkey" PRIMARY KEY, btree (note_id)
 Foreign-key constraints:
