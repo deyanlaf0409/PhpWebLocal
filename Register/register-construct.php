@@ -10,11 +10,12 @@
   <link rel="manifest" href="/project/favicons/site.webmanifest" />
   <link rel="stylesheet" href="register-style.css">
   <link rel="stylesheet" href="../master/footer-style.css">
+  <link rel="stylesheet" href="/project/master/background.css">
 </head>
 <body>
 
   <div class="custom-arrow">
-    <a href="../connect.php" class="back-link"></a>
+    <a href="../Login/construct.php" class="back-link"></a>
   </div>
   
   <form class="fade-in" id="reg-form" enctype="multipart/form-data">

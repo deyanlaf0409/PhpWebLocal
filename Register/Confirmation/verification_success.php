@@ -65,6 +65,7 @@
     </style>
     <link rel="icon" type="image/x-icon" href="/project/favicon.ico">
     <link rel="stylesheet" href="../../master/footer-style.css">
+    <link rel="stylesheet" href="/project/master/background.css">
 </head>
 <body>
     <form class="fade-in" id="success-container">

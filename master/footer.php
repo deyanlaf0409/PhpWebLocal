@@ -29,7 +29,7 @@
                     <ul class="services">
                         <li><a href="/project/API/Developer/documentation.html">Developer API</a></li>
                         <li><a href="#">Terms and Conditions</a></li>
-                        <li><a href="#">Privacy and Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Support</a></li>
                     </ul>
                 </div>

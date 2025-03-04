@@ -11,6 +11,8 @@
   <link rel="manifest" href="/project/favicons/site.webmanifest" />
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="../master/footer-style.css">
+  <link rel="stylesheet" href="/project/master/background.css">
+
 </head>
 <body>
 
@@ -40,10 +42,9 @@
     <button id="evil-button" type="submit" onclick="checkLogin(event)">Login</button>
   </form>
 
+  <script src="script.js"></script>
 
   <?php include '../master/footer.php'; ?>
-
-  <script src="script.js"></script>
 
 </body>
 </html>

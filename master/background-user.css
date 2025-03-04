@@ -1,0 +1,9 @@
+/* Background styles */
+body {
+    background: url('../res/background2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #f4f4f4; /* Fallback color */
+  }
+  
+  /* You can add more background-related styles here */
+  
