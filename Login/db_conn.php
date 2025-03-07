@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Check if request is from the app
                 if (isset($_POST['AppRequest']) && $_POST['AppRequest'] === 'true') {
                     // Fetch all user notes
-                    $sqlNotes = "SELECT note_id, text, body, date_created, date_modified, highlighted, folder_id, locked FROM data WHERE user_id = $1";
+                    $sqlNotes = "SELECT note_id, text, body, date_created, date_modified, highlighted, folder_id, locked, media FROM data WHERE user_id = $1";
                     $resultNotes = pg_query_params($conn, $sqlNotes, array($user_id));
 
                     $notes = [];
@@ -63,7 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             'dateModified' => $note_row['date_modified'],
                             'highlighted' => $note_row['highlighted'],
                             'folderId' => $note_row['folder_id'],
-                            'locked' => $note_row['locked']
+                            'locked' => $note_row['locked'],
+                            'media' => $note_row['media']
                         ];
                     }
 

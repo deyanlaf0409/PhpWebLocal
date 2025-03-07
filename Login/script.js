@@ -102,6 +102,7 @@ function checkLogin(event) {
             notesText += 'Note ID: ' + note.id + '\n';
             notesText += 'Text: ' + note.text + '\n';
             notesText += 'Note body: ' + note.body + '\n';
+            notesText += 'Note image: ' + note.media + '\n';
             notesText += 'Date Created: ' + note.dateCreated + '\n';
             notesText += 'Date Modified: ' + note.dateModified + '\n';
             notesText += 'highlighted: ' + note.highlighted + '\n\n';
