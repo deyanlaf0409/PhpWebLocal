@@ -48,24 +48,34 @@ $row = pg_fetch_assoc($result);
 $filePath = $row['media'];
 
 if ($filePath) {
-    $fileToDelete = __DIR__ . "/../uploads/" . basename($filePath);
+    // Check if any other note is using this media file
+    $checkQuery = "SELECT COUNT(*) FROM data WHERE media = $1 AND note_id != $2";
+    $checkResult = pg_query_params($conn, $checkQuery, [$filePath, $noteID]);
+    $checkRow = pg_fetch_assoc($checkResult);
+    $fileInUse = $checkRow['count'] > 0;
 
-    // Delete the file if it exists
-    if (file_exists($fileToDelete) && unlink($fileToDelete)) {
-        // Update the database to remove the media path
-        $updateQuery = "UPDATE data SET media = NULL WHERE note_id = $1";
-        $updateResult = pg_query_params($conn, $updateQuery, [$noteID]);
+    // Update the database to remove the media path from the note
+    $updateQuery = "UPDATE data SET media = NULL WHERE note_id = $1";
+    $updateResult = pg_query_params($conn, $updateQuery, [$noteID]);
 
-        if ($updateResult) {
-            http_response_code(200);
-            echo json_encode(['message' => 'Image deleted successfully']);
+    if ($updateResult) {
+        if (!$fileInUse) {
+            $fileToDelete = __DIR__ . "/../uploads/" . basename($filePath);
+            // Delete the file if no other note is using it
+            if (file_exists($fileToDelete) && unlink($fileToDelete)) {
+                http_response_code(200);
+                echo json_encode(['message' => 'Image removed from note and deleted successfully']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['message' => 'Image removed from note, but failed to delete file']);
+            }
         } else {
-            http_response_code(500);
-            echo json_encode(['message' => 'Failed to update database']);
+            http_response_code(200);
+            echo json_encode(['message' => 'Image removed from note but kept as it is used by another note']);
         }
     } else {
         http_response_code(500);
-        echo json_encode(['message' => 'Failed to delete image file']);
+        echo json_encode(['message' => 'Failed to update database']);
     }
 } else {
     http_response_code(404);
