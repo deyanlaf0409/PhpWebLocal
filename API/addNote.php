@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 $input = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['body'], $input['dateCreated'], $input['dateModified'])) {
+if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['dateCreated'], $input['dateModified'])) {
     http_response_code(400);
     echo json_encode(['message' => 'Invalid input']);
     exit();
@@ -19,7 +19,7 @@ if (!isset($input['note_id'], $input['user_id'], $input['text'], $input['body'],
 $note_id = $input['note_id'];
 $user_id = $input['user_id'];
 $text = $input['text'];
-$body = $input['body'];
+$body = isset($input['body']) ? $input['body'] : '';
 $dateCreated = $input['dateCreated'];
 $dateModified = $input['dateModified'];
 $folder_id = isset($input['folderId']) && !empty($input['folderId']) ? strtoupper($input['folderId']) : null;
