@@ -43,10 +43,12 @@ $user_id = $user_row['id'];
 $sqlNotes = "
     SELECT 
         data.note_id, 
-        data.text, 
+        data.text,
+        data.body, 
         data.date_created, 
         data.date_modified, 
-        data.highlighted, 
+        data.highlighted,
+        data.locked, 
         folders.name AS folder_name 
     FROM 
         data 
@@ -72,9 +74,11 @@ while ($note_row = pg_fetch_assoc($resultNotes)) {
     $notes[] = [
         'id' => $note_row['note_id'],
         'text' => $note_row['text'],
+        'body' => $note_row['body'],
         'dateCreated' => $note_row['date_created'],
         'dateModified' => $note_row['date_modified'],
-        'highlighted' => $note_row['highlighted'] === 't', // Convert to boolean
+        'highlighted' => $note_row['highlighted'] === 't',
+        'locked' => $note_row['locked'] === 't', // Convert to boolean
         'folderName' => $note_row['folder_name'] // Include folder name
     ];
 }
