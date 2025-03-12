@@ -26,6 +26,24 @@ if (!$token) {
     exit;
 }
 
+// Rate limiting: Set the cooldown period (in seconds) - for example, 60 seconds
+$rateLimitCooldown = 1; // 1 minute
+
+// Check if the last request timestamp exists in the session
+if (isset($_SESSION['last_request_time'])) {
+    $lastRequestTime = $_SESSION['last_request_time'];
+    $currentTime = time();
+
+    // Check if the user has exceeded the rate limit (if less than cooldown period)
+    if ($currentTime - $lastRequestTime < $rateLimitCooldown) {
+        echo json_encode(['status' => 'failure', 'message' => 'Rate limit exceeded. Please try again later.']);
+        exit;
+    }
+}
+
+// Update the last request time in the session
+$_SESSION['last_request_time'] = time();
+
 // Validate the token
 $sqlToken = "SELECT id, username, email FROM users WHERE token = $1";
 $resultToken = pg_query_params($conn, $sqlToken, array($token));
