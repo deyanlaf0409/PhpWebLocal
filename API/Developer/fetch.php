@@ -27,7 +27,7 @@ if (!$token) {
 }
 
 // Rate limiting: Set the cooldown period (in seconds) - for example, 60 seconds
-$rateLimitCooldown = 1; // 1 minute
+$rateLimitCooldown = 2; // 1 minute
 
 // Check if the last request timestamp exists in the session
 if (isset($_SESSION['last_request_time'])) {
