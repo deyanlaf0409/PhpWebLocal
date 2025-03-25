@@ -19,6 +19,10 @@ if (!isset($input['user_id'], $input['text'], $input['dateCreated'], $input['dat
 $user_id = $input['user_id'];
 $text = $input['text'];
 $body = isset($input['body']) ? $input['body'] : '';
+
+$note_id = isset($input['note_id']) && !empty($input['note_id']) ? strtoupper($input['note_id']) : null;
+$media = $note_id ? "http://192.168.0.222/project/uploads/$note_id.png" : null;
+
 $dateCreated = $input['dateCreated'];
 $dateModified = $input['dateModified'];
 $folder_id = null; // Default folder_id to null if "Inbox" folder doesn't exist
@@ -51,9 +55,9 @@ if ($folder_result) {
 $note_id = strtoupper(pg_fetch_result(pg_query($conn, "SELECT gen_random_uuid()"), 0, 0));
 
 // Insert the new note into the database
-$query = "INSERT INTO data (note_id, user_id, text, body, date_created, date_modified, folder_id) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7)";
-$params = [$note_id, $user_id, $text, $body, $dateCreated, $dateModified, $folder_id];
+$query = "INSERT INTO data (note_id, user_id, text, body, media, date_created, date_modified, folder_id) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
+$params = [$note_id, $user_id, $text, $body, $media, $dateCreated, $dateModified, $folder_id];
 
 $result = pg_query_params($conn, $query, $params);
 
