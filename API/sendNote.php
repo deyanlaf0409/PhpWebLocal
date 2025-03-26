@@ -17,7 +17,9 @@ if (!isset($input['user_id'], $input['text'], $input['dateCreated'], $input['dat
 }
 
 $user_id = $input['user_id'];
-$text = $input['text'];
+$username = $input['username'];
+$header = $input['text'];
+$text = $username . ': ' . $header;
 $body = isset($input['body']) ? $input['body'] : '';
 
 $note_id = isset($input['note_id']) && !empty($input['note_id']) ? strtoupper($input['note_id']) : null;
