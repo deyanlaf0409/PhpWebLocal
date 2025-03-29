@@ -12,6 +12,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const noteTextInput = document.getElementById("note-text");
     const folderSelect = document.getElementById("folderSelect");
 
+    // NOTE MODAL ELEMENTS
+    const noteModal = document.getElementById("noteModal");
+    const modalText = document.getElementById("modal-text");
+    const modalBody = document.getElementById("modal-body");
+    //const closeModalButton = document.querySelector(".close-button");
+    const modalTextInput = document.getElementById("modal-text-input");
+    const modalBodyInput = document.getElementById("modal-body-input");
+    const saveNoteButton = document.getElementById("save-note-button");
+
+    let currentNoteId = null;
+
+    noteModal.style.display = "none";
+
     // DELETE CONFIRMATION
     if (deleteButton && confirmationDialog) {
         deleteButton.addEventListener("click", function (event) {
@@ -87,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return v.toString(16);
         });
     }
-    
 
     // ADD NOTE FUNCTION
     if (confirmAddButton && noteTextInput && folderSelect) {
@@ -101,31 +113,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const userId = window.userId; // Fetch from global variable set in PHP
-            console.log(userId);
 
             const currentTime = new Date();
-
-            // Use Intl.DateTimeFormat to get the user's local timezone
-            const userTimeZoneOffset = new Date().getTimezoneOffset(); // Difference from UTC in minutes
-            console.log("User's Timezone Offset (in minutes):", userTimeZoneOffset);
-
-            // Adjust the current time by the user's timezone offset
-            const userLocalTime = new Date(currentTime.getTime() - userTimeZoneOffset * 60000); // Subtract offset in milliseconds
-
-            // Format time in ISO format (in user's local timezone)
+            const userTimeZoneOffset = new Date().getTimezoneOffset();
+            const userLocalTime = new Date(currentTime.getTime() - userTimeZoneOffset * 60000);
             const dateCreated = userLocalTime.toISOString();
-            const dateModified = dateCreated; // Assuming the note is created immediately
+            const dateModified = dateCreated;
 
             const noteData = {
                 note_id: generateUUID().toUpperCase(),
-                user_id: userId, // Retrieved from global JS variable
+                user_id: userId,
                 text: noteText,
                 dateCreated: dateCreated,
                 dateModified: dateModified,
                 folderId: folderId !== "NULL" ? folderId : null,
             };
-
-            console.log("Note data to be sent:", JSON.stringify(noteData));
 
             try {
                 const response = await fetch("/project/API/addNote.php", {
@@ -147,4 +149,83 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // OPEN NOTE MODAL (with editable fields)
+    window.openNoteModal = function(noteElement) {
+        const noteId = noteElement.getAttribute("data-id");
+
+        fetch(`get-card.php?note_id=${noteId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Populate the modal fields with current note data
+                modalTextInput.value = data.text; // Set the note text
+                modalBodyInput.value = data.body; // Set the note body
+                currentNoteId = noteId; // Store the note ID for later use
+                noteModal.style.display = "flex"; // Show modal
+            } else {
+                alert("Error loading note.");
+            }
+        })
+        .catch(error => console.error("Error fetching note:", error));
+    };
+
+    // SAVE NOTE CHANGES
+    saveNoteButton.addEventListener("click", function () {
+        const updatedText = modalTextInput.value.trim();
+        const updatedBody = modalBodyInput.value.trim();
+        
+        if (!updatedText || !updatedBody) {
+            alert("Both text and body must be filled out.");
+            return;
+        }
+
+        const updatedNoteData = {
+            id: currentNoteId,
+            text: updatedText,
+            body: updatedBody,
+            dateModified: new Date().toISOString()
+            //folderId: null,    // Set the folder ID as needed
+        };
+
+        fetch("/project/API/updateNote.php", {
+            method: "PUT",  // Use PUT for updating
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedNoteData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Note updated successfully") {
+                alert("Note updated successfully!");
+                location.reload();  // Reload page to reflect changes
+            } else {
+                alert("Error updating note: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Error updating note:", error);
+            alert("Failed to update note.");
+        });
+    });
+
+    // CLOSE NOTE MODAL
+    window.closeNoteModal = function() {
+        noteModal.style.display = "none";  // This hides the modal
+    };
+
+    // Attach event listener to close button
+    const closeModalButton = document.querySelector(".close-button");
+    if (closeModalButton) {
+        closeModalButton.addEventListener("click", closeNoteModal);
+    }
+
+    // Close modal when clicking outside of it
+    window.addEventListener("click", function (event) {
+        if (event.target === noteModal) {
+            closeNoteModal();
+        }
+    });
 });
+

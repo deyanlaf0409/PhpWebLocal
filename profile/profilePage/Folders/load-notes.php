@@ -16,10 +16,10 @@ try {
 
     // Query to fetch notes
     if ($folder_id === 'all') {
-        $query = $db->prepare('SELECT text, date_created, date_modified FROM data WHERE user_id = :user_id ORDER BY date_modified DESC');
+        $query = $db->prepare('SELECT note_id, text, body, date_created, date_modified FROM data WHERE user_id = :user_id ORDER BY date_modified DESC');
         $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     } else {
-        $query = $db->prepare('SELECT text, date_created, date_modified FROM data WHERE user_id = :user_id AND folder_id = :folder_id ORDER BY date_modified DESC');
+        $query = $db->prepare('SELECT note_id, text, body, date_created, date_modified FROM data WHERE user_id = :user_id AND folder_id = :folder_id ORDER BY date_modified DESC');
         $query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $query->bindParam(':folder_id', $folder_id, PDO::PARAM_INT);
     }
@@ -31,7 +31,7 @@ try {
         foreach ($notes as $note) {
             $formattedDateCreated = (new DateTime($note['date_created']))->format('d/m/Y H:i');
             $formattedDateModified = (new DateTime($note['date_modified']))->format('d/m/Y H:i');
-            echo "<div class='note'>";
+            echo "<div class='note' data-id='" . htmlspecialchars($note['note_id']) . "' onclick='openNoteModal(this)'>";
             echo "<p>" . htmlspecialchars($note['text']) . "</p>";
             echo "<small>Created on: " . htmlspecialchars($formattedDateCreated) . "</small>";
             echo "<small>Last modified on: " . htmlspecialchars($formattedDateModified) . "</small>";

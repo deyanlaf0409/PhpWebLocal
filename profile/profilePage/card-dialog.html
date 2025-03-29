@@ -1,0 +1,44 @@
+<div id="noteModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeNoteModal()">&times;</span>
+        <h2>Edit Card</h2>
+
+        <label for="modal-text-input">Text:</label>
+        <input type="text" id="modal-text-input" />
+
+        <label for="modal-body-input">Body:</label>
+        <textarea id="modal-body-input"></textarea>
+
+        <button id="save-note-button">Save Changes</button>
+    </div>
+</div>
+
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+    }
+    .close-button {
+        float: right;
+        font-size: 24px;
+        cursor: pointer;
+    }
+</style>

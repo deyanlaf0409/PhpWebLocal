@@ -18,7 +18,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 error_log("Received input JSON: " . var_export($input, true));
 
 // Validate input
-if (!isset($input['id']) || !isset($input['text']) || !isset($input['body']) || !isset($input['dateModified']) || !isset($input['highlight']) || !isset($input['folderId']) || !isset($input['locked'])) {
+if (!isset($input['id']) || !isset($input['text']) || !isset($input['body']) || !isset($input['dateModified'])) {
     http_response_code(400);
     echo json_encode(['message' => 'Invalid input']);
     exit();
