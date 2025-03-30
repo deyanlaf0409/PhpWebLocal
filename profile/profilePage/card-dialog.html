@@ -9,6 +9,20 @@
         <label for="modal-body-input">Body:</label>
         <textarea id="modal-body-input"></textarea>
 
+        <p></p>
+
+        <label for="modal-folder-select">Folder:</label>
+        <select id="modal-folder-select">
+            <option value="none">None</option>
+            <?php
+            foreach ($folders as $folder) {
+                echo "<option value='" . htmlspecialchars($folder['id']) . "'>" . htmlspecialchars($folder['name']) . "</option>";
+            }
+            ?>
+        </select>
+
+
+
         <button id="save-note-button">Save Changes</button>
     </div>
 </div>

@@ -151,29 +151,78 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // OPEN NOTE MODAL (with editable fields)
-    window.openNoteModal = function(noteElement) {
+    window.openNoteModal = function (noteElement) {
         const noteId = noteElement.getAttribute("data-id");
-
+    
         fetch(`get-card.php?note_id=${noteId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Populate the modal fields with current note data
-                modalTextInput.value = data.text; // Set the note text
-                modalBodyInput.value = data.body; // Set the note body
-                currentNoteId = noteId; // Store the note ID for later use
-                noteModal.style.display = "flex"; // Show modal
-            } else {
-                alert("Error loading note.");
-            }
-        })
-        .catch(error => console.error("Error fetching note:", error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    modalTextInput.value = data.text;
+                    modalBodyInput.value = data.body;
+                    currentNoteId = noteId;
+    
+                    console.log("Note folder_id:", data.folder_id); // Debugging
+    
+                    // Fetch all user folders
+                    fetch(`Folders/get-folders.php`)
+                        .then(response => response.json())
+                        .then(folders => {
+                            const folderSelect = document.getElementById("modal-folder-select");
+                            folderSelect.innerHTML = ""; // Clear previous options
+    
+                            // Add 'None' option
+                            const noneOption = document.createElement("option");
+                            noneOption.value = "";
+                            noneOption.textContent = "None";
+                            folderSelect.appendChild(noneOption);
+    
+                            let folderFound = false;
+                            const noteFolderId = data.folder_id ? data.folder_id.toString().trim() : ""; // Normalize
+    
+                            folders.forEach(folder => {
+                                console.log("Checking folder:", folder.id, folder.name); // Debugging
+    
+                                const option = document.createElement("option");
+                                option.value = folder.id;
+                                option.textContent = folder.name;
+                                
+                                if (folder.id.toString().trim() === noteFolderId) {
+                                    console.log("Match found:", folder.name); // Debugging
+                                    option.selected = true;
+                                    folderFound = true;
+                                }
+    
+                                folderSelect.appendChild(option);
+                            });
+    
+                            // If no matching folder was found, default to 'None'
+                            if (!folderFound) {
+                                console.log("No matching folder, setting 'None'");
+                                folderSelect.value = "";
+                            }
+    
+                            console.log("Dropdown selected value:", folderSelect.value); // Debugging
+                        })
+                        .catch(error => console.error("Error fetching folders:", error));
+    
+                    noteModal.style.display = "flex";
+                } else {
+                    alert("Error loading note.");
+                }
+            })
+            .catch(error => console.error("Error fetching note:", error));
     };
+    
+    
+    
+    
 
     // SAVE NOTE CHANGES
     saveNoteButton.addEventListener("click", function () {
         const updatedText = modalTextInput.value.trim();
         const updatedBody = modalBodyInput.value.trim();
+        const selectedFolderId = document.getElementById("modal-folder-select").value;
         
         if (!updatedText || !updatedBody) {
             alert("Both text and body must be filled out.");
@@ -184,8 +233,8 @@ document.addEventListener("DOMContentLoaded", function () {
             id: currentNoteId,
             text: updatedText,
             body: updatedBody,
-            dateModified: new Date().toISOString()
-            //folderId: null,    // Set the folder ID as needed
+            dateModified: new Date().toISOString(),
+            folderId: selectedFolderId
         };
 
         fetch("/project/API/updateNote.php", {
