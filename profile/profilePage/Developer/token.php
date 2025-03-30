@@ -98,8 +98,8 @@
         }
 
         button {
-            background: black;
-            color: white;
+            background: #f2f2f2;
+            color: black;
             padding: 8px 16px;
             text-decoration: none;
             border: none;
@@ -110,7 +110,7 @@
         }
 
         button:hover {
-            background-color: rgb(75, 75, 75);
+            
         }
 
         @media screen and (max-width: 700px) {

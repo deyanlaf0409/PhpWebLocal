@@ -92,7 +92,7 @@
             <button id="delete-folder" onclick="deleteFolder()">- Delete Folder</button>
         </div>
 
-        <h3 style="text-align: left;">My Notes:</h3>
+        <h3 style="text-align: left;">My Cards:</h3>
         <div class="notes" id="folder-notes">
             <?php
             include '../../conn_db.php';
