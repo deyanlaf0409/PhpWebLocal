@@ -103,10 +103,11 @@ function checkLogin(event) {
             notesText += 'Text: ' + note.text + '\n';
             notesText += 'Note body: ' + note.body + '\n';
             notesText += 'Note image: ' + note.media + '\n';
-            notesText += 'Date Created: ' + note.dateCreated + '\n';
-            notesText += 'Date Modified: ' + note.dateModified + '\n';
+            //notesText += 'Date Created: ' + note.dateCreated + '\n';
+            //notesText += 'Date Modified: ' + note.dateModified + '\n';
             notesText += 'highlighted: ' + note.highlighted + '\n\n';
             notesText += 'folderId: ' + note.folderId + '\n\n';
+            notesText += 'shared: ' + note.shared + '\n\n';
 
           });
           alert('Welcome,' + username + userId + notesText);

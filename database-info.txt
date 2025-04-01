@@ -40,6 +40,7 @@ website=# \d data
  locked        | boolean                     |           |          | false
  body          | text                        |           | not null | 
  media         | text                        |           |          | 
+ shared        | boolean                     |           |          | false
 Indexes:
     "data_pkey" PRIMARY KEY, btree (note_id)
 Foreign-key constraints:
