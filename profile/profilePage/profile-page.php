@@ -9,8 +9,6 @@
     <meta name="apple-mobile-web-app-title" content="NoteBlocks" />
     <link rel="manifest" href="/project/favicons/site.webmanifest" />
     <link rel="stylesheet" href="profile-style.css">
-    <link rel="stylesheet" href="del-dialog-style.css">
-    <link rel="stylesheet" href="add-dialog-style.css">
     <link rel="stylesheet" href="/project/master/footer-style.css">
     <link rel="stylesheet" href="/project/master/background-user.css">
 </head>

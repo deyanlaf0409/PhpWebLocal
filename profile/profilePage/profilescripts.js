@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     modalBodyInput.value = data.body;
                     currentNoteId = noteId;
     
-                    console.log("Note folder_id:", data.folder_id); // Debugging
+                    //console.log("Note folder_id:", data.folder_id); 
     
                     // Fetch all user folders
                     fetch(`Folders/get-folders.php`)
@@ -181,14 +181,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             const noteFolderId = data.folder_id ? data.folder_id.toString().trim() : ""; // Normalize
     
                             folders.forEach(folder => {
-                                console.log("Checking folder:", folder.id, folder.name); // Debugging
+                                //console.log("Checking folder:", folder.id, folder.name); // Debugging
     
                                 const option = document.createElement("option");
                                 option.value = folder.id;
                                 option.textContent = folder.name;
                                 
                                 if (folder.id.toString().trim() === noteFolderId) {
-                                    console.log("Match found:", folder.name); // Debugging
+                                    //console.log("Match found:", folder.name); // Debugging
                                     option.selected = true;
                                     folderFound = true;
                                 }
@@ -198,13 +198,62 @@ document.addEventListener("DOMContentLoaded", function () {
     
                             // If no matching folder was found, default to 'None'
                             if (!folderFound) {
-                                console.log("No matching folder, setting 'None'");
+                                //console.log("No matching folder, setting 'None'");
                                 folderSelect.value = "";
                             }
     
-                            console.log("Dropdown selected value:", folderSelect.value); // Debugging
+                            //console.log("Dropdown selected value:", folderSelect.value); // Debugging
                         })
                         .catch(error => console.error("Error fetching folders:", error));
+
+
+
+                        // Display note image
+                const noteImageContainer = document.getElementById("note-image-container");
+                const imageUrl = data.media;
+
+                // Clear previous image if any
+                noteImageContainer.innerHTML = "";
+
+                if (imageUrl) {
+                    const img = document.createElement("img");
+                    img.src = imageUrl;
+                    img.alt = "Note Image";
+                    img.style.maxWidth = "100px"; // Set a max width
+                    noteImageContainer.appendChild(img);
+
+                    // Show remove image button
+                    const removeImageButton = document.getElementById('removeImageButton');
+                    removeImageButton.style.display = 'inline-block';
+
+                    // Set the remove image button functionality
+                    removeImageButton.onclick = function () {
+                        removeImage(noteId, noteElement);
+                    };
+
+                    // Show replace image option
+                    const uploadImageButton = document.getElementById('uploadImageButton');
+                    uploadImageButton.textContent = 'Replace Image';
+                    uploadImageButton.onclick = function () {
+                        uploadImage(noteId, noteElement);
+                    };
+                } else {
+                    noteImageContainer.innerHTML = "<p>No image for this note</p>";
+
+                    // Hide the remove image button if no image exists
+                    const removeImageButton = document.getElementById('removeImageButton');
+                    removeImageButton.style.display = 'none';
+
+                    // Show upload image button
+                    const uploadImageButton = document.getElementById('uploadImageButton');
+                    uploadImageButton.textContent = 'Upload Image';
+                    uploadImageButton.onclick = function () {
+                        uploadImage(noteId, noteElement);
+                    };
+                }
+
+
+
     
                     noteModal.style.display = "flex";
                 } else {
@@ -277,4 +326,67 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+// Function to handle image upload
+function uploadImage(noteId, noteElement) {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('noteID', noteId);
+
+            fetch('/project/API/uploadImage.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        openNoteModal(noteElement);  // Refresh the modal with new image
+                    } else {
+                        alert('Error uploading image: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Error uploading image: ' + error.message);
+                });
+        }
+    });
+
+    fileInput.click(); // Trigger file input dialog
+}
+
+// Function to remove image
+function removeImage(noteId, noteElement) {
+    if (confirm('Are you sure you want to remove this image?')) {
+        const requestBody = {
+            noteID: noteId
+        };
+
+        fetch('/project/API/removeImage.php', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Image removed from note and deleted successfully' || data.message === 'Image removed from note but kept as it is used by another note') {
+                    openNoteModal(noteElement);  // Refresh the modal without the image
+                } else {
+                    alert('Error removing image: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('Error removing image: ' + error.message);
+            });
+    }
+}
 

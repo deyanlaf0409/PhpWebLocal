@@ -21,6 +21,21 @@
             ?>
         </select>
 
+        <p></p>
+
+        <div id="image-section">
+            <h3>Note Image</h3>
+            <div id="note-image-container">
+                <!-- Placeholder text will appear if no image is set -->
+                <span id="image-placeholder">No image for this note</span>
+            </div>
+            <!-- Image upload and removal buttons -->
+            <button id="uploadImageButton">Upload Image</button>
+            <button id="removeImageButton" style="display: none;">Remove Image</button>
+        </div>
+        
+        <p></p>
+
 
 
         <button id="save-note-button">Save Changes</button>
@@ -53,6 +68,33 @@
     .close-button {
         float: right;
         font-size: 24px;
+        cursor: pointer;
+    }
+
+    #note-image-container {
+    width: 150px; /* Adjust width as needed */
+    height: 150px; /* Adjust height as needed */
+    border: 1px dashed #bbb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto; /* Centers the box horizontally */
+    position: relative;
+    background-color: #f8f8f8; /* Optional background color for visibility */
+    text-align: center; /* Ensures text inside is centered */
+}
+
+#image-placeholder {
+    font-size: 14px;
+    color: #888;
+    padding: 20px; /* Adds padding to ensure text doesn't touch the edges */
+    display: block;
+}
+
+
+    #uploadImageButton, #removeImageButton {
+        margin: 10px 0;
+        padding: 10px;
         cursor: pointer;
     }
 </style>
