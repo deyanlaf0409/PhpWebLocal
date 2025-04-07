@@ -52,15 +52,6 @@
     margin-top: 15px;
     color: #555;
   }
-
-  .corner-image {
-    margin-top: 20px; /* Space above the image */
-    width: 100px; /* Adjust width as needed */
-    height: 100px; /* Adjust height as needed */
-    object-fit: contain; /* Ensure the image scales properly */
-    border-radius: 8px; /* Optional: rounded corners */
-    position: center;
-  }
   
 
 /* Adjust for mobile devices */
