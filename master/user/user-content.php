@@ -4,9 +4,26 @@ ini_set('display_errors', 1);
 ?>
 
 <div class="container" id="cntnr">
+  <div class="release">
 
-    
+    <h2>Release Version - 1.0.0</h2>
+
+    <h3>Added Features</h3>
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <h3>Bug Fixes</h3>
+    <ul>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <!--<img src="../res/changelog.png" alt="Image" class="corner-image"> -->
 </div>
+
+
 
 <button id="scrollToTopBtn" class="scroll-to-top-btn"></button>
 

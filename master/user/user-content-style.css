@@ -1,4 +1,5 @@
 .container {
+    position: relative;
     width: 35%; /* Ensures the container takes up 50% of the parent or viewport width */
     max-width: 600px; /* Optional: Set a maximum width for larger screens */
     margin: 30px auto 50px auto; /* Center the container */
@@ -38,6 +39,29 @@
     margin-bottom: 10px;
     color: #333;
 }
+
+.release {
+    padding: 20px 0;
+  }
+  
+  .release h2 {
+    color: #333;
+  }
+  
+  .release h3 {
+    margin-top: 15px;
+    color: #555;
+  }
+
+  .corner-image {
+    margin-top: 20px; /* Space above the image */
+    width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+    object-fit: contain; /* Ensure the image scales properly */
+    border-radius: 8px; /* Optional: rounded corners */
+    position: center;
+  }
+  
 
 /* Adjust for mobile devices */
 @media only screen and (max-width: 700px) {

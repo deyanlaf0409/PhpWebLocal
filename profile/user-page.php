@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="page-style.css">
     <link rel="stylesheet" href="../master/footer-style.css">
     <link rel="stylesheet" href="../master/user/user-content-style.css">
-    <link rel="stylesheet" href="dialog-style.css">
     <link rel="stylesheet" href="/project/master/background-user.css">
 </head>
 
