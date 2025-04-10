@@ -28,6 +28,10 @@ $media = $note_id ? "http://192.168.0.222/project/uploads/$note_id.png" : null;
 $dateCreated = $input['dateCreated'];
 $dateModified = $input['dateModified'];
 $folder_id = null; // Default folder_id to null if "Inbox" folder doesn't exist
+$locked = $input['locked'];
+
+$locked = $locked ? 'true' : 'false';
+//error_log("Converted locked Value: " . $locked);
 
 include '../conn_db.php';
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
@@ -57,9 +61,9 @@ if ($folder_result) {
 $note_id = strtoupper(pg_fetch_result(pg_query($conn, "SELECT gen_random_uuid()"), 0, 0));
 
 // Insert the new note into the database
-$query = "INSERT INTO data (note_id, user_id, text, body, media, date_created, date_modified, folder_id) 
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)";
-$params = [$note_id, $user_id, $text, $body, $media, $dateCreated, $dateModified, $folder_id];
+$query = "INSERT INTO data (note_id, user_id, text, body, media, date_created, date_modified, folder_id, locked) 
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+$params = [$note_id, $user_id, $text, $body, $media, $dateCreated, $dateModified, $folder_id, $locked];
 
 $result = pg_query_params($conn, $query, $params);
 
