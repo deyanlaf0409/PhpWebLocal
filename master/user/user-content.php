@@ -6,17 +6,17 @@ ini_set('display_errors', 1);
 <div class="container" id="cntnr">
   <div class="release">
 
-    <h2>Release Version - 1.0.0</h2>
+    <h2>Release Version - 1.0.1</h2>
 
-    <h3>Added Features</h3>
+    <h3>New Features</h3>
     <ul>
-      <li></li>
+      <li>Added firends search</li>
       <li></li>
     </ul>
 
     <h3>Bug Fixes</h3>
     <ul>
-      <li></li>
+      <li>Minor UI updates</li>
       <li></li>
     </ul>
   </div>
@@ -25,9 +25,10 @@ ini_set('display_errors', 1);
 
 
 
-<button id="scrollToTopBtn" class="scroll-to-top-btn"></button>
+<!--<button id="scrollToTopBtn" class="scroll-to-top-btn"></button> -->
 
-<!-- Scroll to Top Button Script -->
+<!--
+ 
 <script>
 const scrollToTopButton = document.querySelector(".scroll-to-top-btn");
 
@@ -46,6 +47,7 @@ scrollToTopButton.addEventListener("click", () => {
     });
 });
 </script>
+-->
 
 <!-- Fade-in Animation Script -->
 <script>

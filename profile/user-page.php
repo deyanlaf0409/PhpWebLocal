@@ -23,7 +23,7 @@
         <a class="logout" id="logout-btn">Logout</a>
         <a href="profilePage/profile-page.php" class="profile" id="prof-btn">Profile</a>
 
-        <a href="#Social/friends-page.php" onclick="closeDropdown()" class="social" id="social">Group</a>
+        <a href="#Social/friends-page.php" onclick="closeDropdown()" class="social" id="social">Friends</a>
     </nav>
 
     <header class="welcome">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <button id="scrollToTopBtn" class="scroll-to-top-btn"></button>
+    <!--<button id="scrollToTopBtn" class="scroll-to-top-btn"></button> -->
     
     <?php include 'dialog-out.html'; ?>
     <?php include '../master/footer.php'; ?>
