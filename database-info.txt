@@ -1,8 +1,8 @@
-website=# \d users
-                                            Table "public.users"
-       Column       |            Type             | Collation | Nullable |              Default              
---------------------+-----------------------------+-----------+----------+-----------------------------------
- id                 | integer                     |           | not null | nextval('users_id_seq'::regclass)
+noteblocksdata0409=# \d users
+                                     Table "public.users"
+       Column       |            Type             | Collation | Nullable |      Default       
+--------------------+-----------------------------+-----------+----------+--------------------
+ id                 | uuid                        |           | not null | uuid_generate_v4()
  username           | character varying(50)       |           | not null | 
  email              | character varying(100)      |           | not null | 
  password           | character varying(255)      |           | not null | 
@@ -17,7 +17,7 @@ Indexes:
     "users_username_key" UNIQUE CONSTRAINT, btree (username)
 Referenced by:
     TABLE "data" CONSTRAINT "data_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-    TABLE "password_reset_tokens" CONSTRAINT "fk_user_id" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+    TABLE "password_reset_tokens" CONSTRAINT "fk_user_email" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
     TABLE "folders" CONSTRAINT "fk_user_id" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "friend_requests" CONSTRAINT "friend_requests_receiver_id_fkey" FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "friend_requests" CONSTRAINT "friend_requests_sender_id_fkey" FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
@@ -26,12 +26,13 @@ Referenced by:
 
 
 
-website=# \d data
-                                            Table "public.data"
-    Column     |            Type             | Collation | Nullable |                Default                
----------------+-----------------------------+-----------+----------+---------------------------------------
- note_id       | character varying(36)       |           | not null | nextval('data_note_id_seq'::regclass)
- user_id       | integer                     |           | not null | 
+
+noteblocksdata0409=# \d data
+                                   Table "public.data"
+    Column     |            Type             | Collation | Nullable |      Default       
+---------------+-----------------------------+-----------+----------+--------------------
+ note_id       | uuid                        |           | not null | uuid_generate_v4()
+ user_id       | uuid                        |           | not null | 
  text          | text                        |           | not null | 
  date_created  | timestamp without time zone |           |          | now()
  date_modified | timestamp without time zone |           |          | now()
@@ -49,27 +50,29 @@ Foreign-key constraints:
 
 
 
-website=# \d password_reset_tokens
-                                        Table "public.password_reset_tokens"
-   Column   |            Type             | Collation | Nullable |                      Default                      
-------------+-----------------------------+-----------+----------+---------------------------------------------------
- id         | integer                     |           | not null | nextval('password_reset_tokens_id_seq'::regclass)
+
+noteblocksdata0409=# \d password_reset_tokens
+                         Table "public.password_reset_tokens"
+   Column   |            Type             | Collation | Nullable |      Default       
+------------+-----------------------------+-----------+----------+--------------------
+ id         | uuid                        |           | not null | uuid_generate_v4()
  email      | character varying(255)      |           | not null | 
  token      | character varying(255)      |           | not null | 
  expiration | timestamp without time zone |           | not null | 
 Indexes:
     "password_reset_tokens_pkey" PRIMARY KEY, btree (id)
 Foreign-key constraints:
-    "fk_user_id" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+    "fk_user_email" FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
 
 
 
-website=# \d folders
-                                     Table "public.folders"
- Column  |          Type          | Collation | Nullable |                Default                
----------+------------------------+-----------+----------+---------------------------------------
- id      | uuid                   |           | not null | upper(uuid_generate_v4()::text)::uuid
- user_id | integer                |           | not null | 
+
+noteblocksdata0409=# \d folders
+                            Table "public.folders"
+ Column  |          Type          | Collation | Nullable |      Default       
+---------+------------------------+-----------+----------+--------------------
+ id      | uuid                   |           | not null | uuid_generate_v4()
+ user_id | uuid                   |           | not null | 
  name    | character varying(255) |           | not null | 
 Indexes:
     "folders_pkey" PRIMARY KEY, btree (id)
@@ -79,14 +82,15 @@ Referenced by:
     TABLE "data" CONSTRAINT "fk_folder" FOREIGN KEY (folder_id) REFERENCES folders(id)
 
 
+
     
-website=# \d friend_requests
-                                         Table "public.friend_requests"
-   Column    |            Type             | Collation | Nullable |                   Default                   
--------------+-----------------------------+-----------+----------+---------------------------------------------
- id          | integer                     |           | not null | nextval('friend_requests_id_seq'::regclass)
- sender_id   | integer                     |           | not null | 
- receiver_id | integer                     |           | not null | 
+noteblocksdata0409=# \d friend_requests
+                                 Table "public.friend_requests"
+   Column    |            Type             | Collation | Nullable |           Default            
+-------------+-----------------------------+-----------+----------+------------------------------
+ id          | uuid                        |           | not null | uuid_generate_v4()
+ sender_id   | uuid                        |           | not null | 
+ receiver_id | uuid                        |           | not null | 
  status      | character varying(20)       |           | not null | 'pending'::character varying
  created_at  | timestamp without time zone |           |          | now()
 Indexes:
@@ -98,13 +102,14 @@ Foreign-key constraints:
 
 
 
-website=# \d friends
-                                        Table "public.friends"
-   Column   |            Type             | Collation | Nullable |               Default               
-------------+-----------------------------+-----------+----------+-------------------------------------
- id         | integer                     |           | not null | nextval('friends_id_seq'::regclass)
- user1_id   | integer                     |           | not null | 
- user2_id   | integer                     |           | not null | 
+
+noteblocksdata0409=# \d friends
+                                Table "public.friends"
+   Column   |            Type             | Collation | Nullable |      Default       
+------------+-----------------------------+-----------+----------+--------------------
+ id         | uuid                        |           | not null | uuid_generate_v4()
+ user1_id   | uuid                        |           | not null | 
+ user2_id   | uuid                        |           | not null | 
  created_at | timestamp without time zone |           |          | now()
 Indexes:
     "friends_pkey" PRIMARY KEY, btree (id)
@@ -115,3 +120,88 @@ Foreign-key constraints:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Enable UUID extension (only once if not done already)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- USERS TABLE
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    is_verified BOOLEAN DEFAULT FALSE,
+    date_added DATE DEFAULT CURRENT_DATE,
+    token VARCHAR(255),
+    token_generated_at TIMESTAMP,
+    last_logged DATE
+);
+
+-- DATA TABLE
+CREATE TABLE data (
+    note_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL,
+    text TEXT NOT NULL,
+    date_created TIMESTAMP DEFAULT NOW(),
+    date_modified TIMESTAMP DEFAULT NOW(),
+    highlighted BOOLEAN DEFAULT FALSE,
+    folder_id UUID,
+    locked BOOLEAN DEFAULT FALSE,
+    body TEXT NOT NULL,
+    media TEXT,
+    shared BOOLEAN DEFAULT FALSE,
+    CONSTRAINT data_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_folder FOREIGN KEY (folder_id) REFERENCES folders(id)
+);
+
+-- PASSWORD RESET TOKENS TABLE
+CREATE TABLE password_reset_tokens (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expiration TIMESTAMP NOT NULL,
+    CONSTRAINT fk_user_email FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+);
+
+-- FOLDERS TABLE
+CREATE TABLE folders (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- FRIEND REQUESTS TABLE
+CREATE TABLE friend_requests (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    sender_id UUID NOT NULL,
+    receiver_id UUID NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT friend_requests_sender_id_fkey FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT friend_requests_receiver_id_fkey FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT friend_requests_sender_id_receiver_id_key UNIQUE (sender_id, receiver_id)
+);
+
+-- FRIENDS TABLE
+CREATE TABLE friends (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user1_id UUID NOT NULL,
+    user2_id UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT friends_user1_id_fkey FOREIGN KEY (user1_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT friends_user2_id_fkey FOREIGN KEY (user2_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT friends_user1_id_user2_id_key UNIQUE (user1_id, user2_id)
+);

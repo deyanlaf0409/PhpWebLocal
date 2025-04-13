@@ -27,7 +27,7 @@ if (!$token) {
 }
 
 // Rate limiting: Set the cooldown period (in seconds) - for example, 60 seconds
-$rateLimitCooldown = 2; // 1 minute
+$rateLimitCooldown = 3; 
 
 // Check if the last request timestamp exists in the session
 if (isset($_SESSION['last_request_time'])) {
@@ -60,7 +60,6 @@ $user_id = $user_row['id'];
 // Build the base SQL query
 $sqlNotes = "
     SELECT 
-        data.note_id, 
         data.text,
         data.body, 
         data.date_created, 
@@ -90,7 +89,6 @@ if ($folderName) {
 $notes = [];
 while ($note_row = pg_fetch_assoc($resultNotes)) {
     $notes[] = [
-        'id' => $note_row['note_id'],
         'text' => $note_row['text'],
         'body' => $note_row['body'],
         'dateCreated' => $note_row['date_created'],
