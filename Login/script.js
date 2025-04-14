@@ -30,6 +30,8 @@ function checkLogin(event) {
   var email = document.getElementById("email").value.trim();
   var password = document.getElementById("password").value.trim();
 
+  var captchaResponse = grecaptcha.getResponse();
+
   var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!email || !password) {
@@ -48,6 +50,11 @@ function checkLogin(event) {
     return false;
   }
 
+  if (!captchaResponse) {
+    alert("Please complete the CAPTCHA.");
+    return false;
+  }
+
   var urlParams = new URLSearchParams(window.location.search);
   var appRequest = urlParams.get("AppRequest") === "true";
 
@@ -55,6 +62,7 @@ function checkLogin(event) {
   var formData = new FormData(loginForm);
   formData.append("email", email);
   formData.append("password", password);
+  formData.append('g-recaptcha-response', captchaResponse);
 
   if (appRequest) {
     formData.append("AppRequest", "true");

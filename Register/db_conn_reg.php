@@ -10,6 +10,27 @@ $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pa
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        // CAPTCHA verification
+        $captcha = $_POST['g-recaptcha-response'];
+
+        if (!$captcha) {
+            echo "captcha_missing"; // User didn't solve the CAPTCHA
+            exit;
+        }
+    
+        // Verify CAPTCHA with Google
+        $secretKey = "6LdHnRgrAAAAAHXHVnP_Tihb7pOKanJnwjeFgSTJ"; // <-- Put your actual secret key here
+        $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captcha");
+        $responseData = json_decode($verifyResponse);
+    
+        if (!$responseData->success) {
+            echo "captcha_failed"; // CAPTCHA validation failed
+            exit;
+        }
+    
+        // Continue with your registration logic...
+    
     // Retrieve registration data from the form
     $username = $_POST["username"];
     $email = $_POST["email"];

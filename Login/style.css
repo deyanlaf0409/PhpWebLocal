@@ -69,7 +69,7 @@ input, textarea, select {
 form {
   margin: 50px auto;
   width: 300px;
-  height: 400px;
+  height: 470px;
   background-color: #fff;
   padding: 20px;
   border-radius: 15px;
@@ -185,6 +185,7 @@ button:hover {
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
   margin-top: 5px; /* Add a small margin-top */
+  margin-bottom: 10px;
 }
 
 

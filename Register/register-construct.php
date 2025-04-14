@@ -39,12 +39,17 @@
       <input type="checkbox" id="agree" name="agree">
       <label for="agree">I agree to the terms and conditions</label>
     </div>
+
+    <div class="g-recaptcha" data-sitekey="6LdHnRgrAAAAAIyABrWvNQB3mtU89OlfKqxFBMlz"></div>
+
     <button id="register-button" onclick="checkRegister(event)">Register</button>
   </form>
 
   <?php include '../master/footer.php'; ?>
 
   <script src="register-script.js"></script>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 </html>

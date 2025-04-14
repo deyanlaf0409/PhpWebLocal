@@ -39,10 +39,14 @@
       <p>Don't have an account? <a href="../Register/register-construct.php" class="register-link">Create</a></p>
     </div>
 
+    <div class="g-recaptcha" data-sitekey="6LdHnRgrAAAAAIyABrWvNQB3mtU89OlfKqxFBMlz"></div>
+
     <button id="evil-button" type="submit" onclick="checkLogin(event)">Login</button>
   </form>
 
   <script src="script.js"></script>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <?php include '../master/footer.php'; ?>
 

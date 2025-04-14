@@ -22,6 +22,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
+    $captcha = $_POST['g-recaptcha-response'] ?? '';
+
+    if (empty($captcha)) {
+        exit('captcha_missing');
+    }
+    
+    // Verify CAPTCHA
+    $secretKey = '6LdHnRgrAAAAAHXHVnP_Tihb7pOKanJnwjeFgSTJ'; // From Google reCAPTCHA admin
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) . '&response=' . urlencode($captcha));
+    $responseData = json_decode($verifyResponse);
+    
+    if (!$responseData->success) {
+        exit('captcha_failed');
+    }
+
     // Perform the database check to fetch the hashed password and user details
     $sql = "SELECT id, username, password, is_verified FROM USERS WHERE email = $1";
     $result = pg_query_params($conn, $sql, array($email));
