@@ -40,7 +40,8 @@
       <label for="agree">I agree to the terms and conditions</label>
     </div>
 
-    <div class="g-recaptcha" data-sitekey="6LdHnRgrAAAAAIyABrWvNQB3mtU89OlfKqxFBMlz"></div>
+    <?php include '../reCaptcha.php'; ?>
+    <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaSiteKey; ?>"></div>
 
     <button id="register-button" onclick="checkRegister(event)">Register</button>
   </form>

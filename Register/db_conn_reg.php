@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include '../conn_db.php';
+include '../reCaptcha.php';
 
 // Establish the database connection
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     
         // Verify CAPTCHA with Google
-        $secretKey = "6LdHnRgrAAAAAHXHVnP_Tihb7pOKanJnwjeFgSTJ"; // <-- Put your actual secret key here
+        $secretKey = $recaptchaSecretKey; // <-- Put your actual secret key here
         $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secretKey&response=$captcha");
         $responseData = json_decode($verifyResponse);
     

@@ -12,6 +12,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include '../conn_db.php';
+include '../reCaptcha.php';
 
 // Establish the database connection
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
@@ -29,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     // Verify CAPTCHA
-    $secretKey = '6LdHnRgrAAAAAHXHVnP_Tihb7pOKanJnwjeFgSTJ'; // From Google reCAPTCHA admin
+    $secretKey = $recaptchaSecretKey; // From Google reCAPTCHA admin
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) . '&response=' . urlencode($captcha));
     $responseData = json_decode($verifyResponse);
     
