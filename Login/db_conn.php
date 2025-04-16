@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $captcha = $_POST['g-recaptcha-response'] ?? '';
-
+    //$captcha = $_POST['g-recaptcha-response'] ?? '';
+/*
     if (empty($captcha)) {
         exit('captcha_missing');
     }
@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$responseData->success) {
         exit('captcha_failed');
     }
+        */
 
     // Perform the database check to fetch the hashed password and user details
     $sql = "SELECT id, username, password, is_verified FROM USERS WHERE email = $1";

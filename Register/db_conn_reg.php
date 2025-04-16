@@ -13,6 +13,7 @@ $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$pa
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // CAPTCHA verification
+        /*
         $captcha = $_POST['g-recaptcha-response'];
 
         if (!$captcha) {
@@ -29,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "captcha_failed"; // CAPTCHA validation failed
             exit;
         }
+            */
     
         // Continue with your registration logic...
     

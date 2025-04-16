@@ -39,10 +39,7 @@
       <input type="checkbox" id="agree" name="agree">
       <label for="agree">I agree to the terms and conditions</label>
     </div>
-
-    <?php include '../reCaptcha.php'; ?>
-    <div class="g-recaptcha" data-sitekey="<?php echo $recaptchaSiteKey; ?>"></div>
-
+    
     <button id="register-button" onclick="checkRegister(event)">Register</button>
   </form>
 

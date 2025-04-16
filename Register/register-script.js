@@ -6,7 +6,7 @@ function checkRegister(event) {
     var confirmPassword = document.getElementById("confirm-password").value;
     var checkbox = document.getElementById("agree");
 
-    var captchaResponse = grecaptcha.getResponse();
+    //var captchaResponse = grecaptcha.getResponse();
 
     var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -42,11 +42,12 @@ function checkRegister(event) {
         alert("Please agree to the terms and conditions.");
         return false;
     }
-
+/*
     if (captchaResponse.length === 0) {
         alert("Please complete the CAPTCHA.");
         return false;
     }
+        */
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "db_conn_reg.php", true);
@@ -78,7 +79,7 @@ function checkRegister(event) {
     var data = "username=" + encodeURIComponent(username) +
                 "&email=" + encodeURIComponent(email) +
                 "&password=" + encodeURIComponent(password) +
-                "&g-recaptcha-response=" + encodeURIComponent(captchaResponse);
+                //"&g-recaptcha-response=" + encodeURIComponent(captchaResponse);
 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send(data);
