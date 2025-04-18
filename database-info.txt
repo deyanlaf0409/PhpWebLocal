@@ -121,6 +121,19 @@ Foreign-key constraints:
 
 
 
+noteblocksdata0409=# \d reported
+                           Table "public.reported"
+ Column  |          Type          | Collation | Nullable |      Default       
+---------+------------------------+-----------+----------+--------------------
+ id      | uuid                   |           | not null | uuid_generate_v4()
+ note_id | uuid                   |           | not null | 
+ url     | character varying(255) |           |          | 
+Indexes:
+    "reported_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "fk_reported_note" FOREIGN KEY (note_id) REFERENCES data(note_id) ON DELETE CASCADE
+
+
 
 
 
@@ -205,3 +218,13 @@ CREATE TABLE friends (
     CONSTRAINT friends_user2_id_fkey FOREIGN KEY (user2_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT friends_user1_id_user2_id_key UNIQUE (user1_id, user2_id)
 );
+
+
+CREATE TABLE reported (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    note_id UUID NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_note_id FOREIGN KEY (note_id) REFERENCES data(note_id) ON DELETE CASCADE
+);
+
+
