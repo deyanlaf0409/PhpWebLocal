@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 // Fetch 15 RANDOM shared notes, any user
 $sql = "
-    SELECT u.username, d.text, d.body, d.media 
+    SELECT u.username, d.note_id AS id, d.text, d.body, d.media 
     FROM data d
     INNER JOIN users u ON d.user_id = u.id
     WHERE d.shared = true
@@ -33,6 +33,7 @@ $result = pg_query($conn, $sql);
 $feed = [];
 while ($row = pg_fetch_assoc($result)) {
     $feed[] = [
+        'card_id' => $row['id'],
         'username' => $row['username'],
         'title' => $row['text'],
         'body' => $row['body'],
