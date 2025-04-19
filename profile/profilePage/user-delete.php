@@ -27,42 +27,46 @@ if (!$conn) {
     die("Connection failed: " . pg_last_error());
 }
 
-// Fix: Use correct table name case
-$query_notes = "SELECT note_id FROM data WHERE user_id = (SELECT id FROM users WHERE email = $1)";
-$result_notes = pg_query_params($conn, $query_notes, array($email));
-
-if (!$result_notes) {
-    die("Error fetching notes: " . pg_last_error($conn));
+// Get the user's ID first
+$query_user = "SELECT id FROM users WHERE email = $1";
+$result_user = pg_query_params($conn, $query_user, array($email));
+if (!$result_user || pg_num_rows($result_user) === 0) {
+    die("User not found.");
 }
 
-// Fixed absolute path to the uploads directory
-$uploadDir = "/var/www/html/project/uploads/";  // Absolute path to uploads directory
-echo "Resolved upload directory: $uploadDir<br>"; // Debug: Check resolved directory
+$user = pg_fetch_assoc($result_user);
+$user_id = $user['id'];
 
+// Delete note images
+$query_notes = "SELECT note_id FROM data WHERE user_id = $1";
+$result_notes = pg_query_params($conn, $query_notes, array($user_id));
+
+$uploadDirNotes = "/var/www/html/project/uploads/";
 while ($row = pg_fetch_assoc($result_notes)) {
-    $file_path = $uploadDir . $row['note_id'] . ".png";
-    echo "Looking for file: $file_path<br>"; // Debug: Print file path
-
+    $file_path = $uploadDirNotes . $row['note_id'] . ".png";
     if (file_exists($file_path)) {
         unlink($file_path);
-    } else {
-        echo "File not found: $file_path<br>"; // Debug: File not found message
     }
 }
 
+// Delete profile picture
+$profilePicPath = "/var/www/html/project/uploads/profilePictures/" . $user_id . ".png";
+if (file_exists($profilePicPath)) {
+    unlink($profilePicPath);
+}
+
 // Delete the user from the database
-$query_delete_user = "DELETE FROM users WHERE email = $1";
-$result_delete = pg_query_params($conn, $query_delete_user, array($email));
+$query_delete_user = "DELETE FROM users WHERE id = $1";
+$result_delete = pg_query_params($conn, $query_delete_user, array($user_id));
 
 if ($result_delete) {
     session_destroy();
     header("Location: ../goodbye.php"); // Redirect to goodbye page
     exit;
 } else {
-    echo "Error deleting user: " . pg_last_error($conn); // Error if the user can't be deleted
+    echo "Error deleting user: " . pg_last_error($conn);
 }
 
-// Close DB connection
 pg_close($conn);
-ob_end_flush(); // End output buffering and flush any remaining output
+ob_end_flush();
 ?>

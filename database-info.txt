@@ -11,6 +11,7 @@ noteblocksdata0409=# \d users
  token              | character varying(255)      |           |          | 
  token_generated_at | timestamp without time zone |           |          | 
  last_logged        | date                        |           |          | 
+ picture            | character varying(255)      |           |          | 
 Indexes:
     "users_pkey" PRIMARY KEY, btree (id)
     "users_email_key" UNIQUE CONSTRAINT, btree (email)
@@ -159,7 +160,8 @@ CREATE TABLE users (
     date_added DATE DEFAULT CURRENT_DATE,
     token VARCHAR(255),
     token_generated_at TIMESTAMP,
-    last_logged DATE
+    last_logged DATE,
+    picture character varying(255)
 );
 
 -- DATA TABLE
