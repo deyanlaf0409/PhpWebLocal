@@ -87,7 +87,7 @@ if (strtoupper((string)$note_owner_id) === strtoupper((string)$user_id)) {
 
 
 // Generate the note URL
-$note_url = "https://noteblocks.net/uploads/$note_id.png";
+$note_url = "https://noteblocks.net/uploads/" . strtoupper($note_id) . ".png";
 
 // Insert the reported note into the reported_notes table with the URL
 $insert_query = "INSERT INTO reported (note_id, url) VALUES ($1, $2)";
