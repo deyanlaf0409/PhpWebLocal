@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    //$captcha = $_POST['g-recaptcha-response'] ?? '';
-/*
+    $captcha = $_POST['g-recaptcha-response'] ?? '';
+
     if (empty($captcha)) {
         exit('captcha_missing');
     }
@@ -37,10 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!$responseData->success) {
         exit('captcha_failed');
     }
-        */
 
     // Perform the database check to fetch the hashed password and user details
-    $sql = "SELECT id, username, password, is_verified FROM USERS WHERE email = $1";
+    $sql = "SELECT id, username, picture, password, is_verified FROM USERS WHERE email = $1";
     $result = pg_query_params($conn, $sql, array($email));
 
     if (pg_num_rows($result) > 0) {
@@ -50,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $isVerified = $user_row['is_verified'];
         $username = $user_row['username'];
         $user_id = $user_row['id'];
+        $picture = $user_row['picture'];
 
         // Verify the password
         if (password_verify($password, $hashedPassword)) {
@@ -104,6 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         'status' => 'success',
                         'username' => $username,
                         'user_id' => $user_id,
+                        'picture' => $picture,
                         'notes' => $notes,
                         'folders' => $folders
                     ]);

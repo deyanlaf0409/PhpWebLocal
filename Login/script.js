@@ -30,7 +30,7 @@ function checkLogin(event) {
   var email = document.getElementById("email").value.trim();
   var password = document.getElementById("password").value.trim();
 
-
+  var captchaResponse = grecaptcha.getResponse();
 
   var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -49,12 +49,11 @@ function checkLogin(event) {
     alert("Invalid password.");
     return false;
   }
-/*
+
   if (!captchaResponse) {
     alert("Please complete the CAPTCHA.");
     return false;
   }
-    */
 
   var urlParams = new URLSearchParams(window.location.search);
   var appRequest = urlParams.get("AppRequest") === "true";
@@ -63,7 +62,7 @@ function checkLogin(event) {
   var formData = new FormData(loginForm);
   formData.append("email", email);
   formData.append("password", password);
-  //formData.append('g-recaptcha-response', captchaResponse);
+  formData.append('g-recaptcha-response', captchaResponse);
 
   if (appRequest) {
     formData.append("AppRequest", "true");
@@ -102,6 +101,7 @@ function checkLogin(event) {
           const data = JSON.parse(response.trim());
           var username = data.username;
           var userId = data.user_id;
+          var picture = data.picture;
           var notesData = data.notes;
           var folders = data.folders;
           var notesText = 'Your Notes:\n';
@@ -119,7 +119,7 @@ function checkLogin(event) {
             notesText += 'shared: ' + note.shared + '\n\n';
 
           });
-          alert('Welcome,' + username + userId + notesText);
+          alert('Welcome,' + username + userId + picture + notesText);
           const notesJSON = JSON.stringify(notesData);
           const foldersJSON = JSON.stringify(folders);
 
@@ -128,10 +128,10 @@ function checkLogin(event) {
           const notesBase64 = btoa(String.fromCharCode(...utf8Bytesnotes));
           const foldersBase64 = btoa(String.fromCharCode(...utf8Bytesfolders));
 
-          const deepLink = `latenightnotes://auth?status=success&username=${encodeURIComponent(username)}&user_id=${encodeURIComponent(userId)}&notes=${encodeURIComponent(notesBase64)}&folders=${encodeURIComponent(foldersBase64)}`;
+          const deepLink = `latenightnotes://auth?status=success&username=${encodeURIComponent(username)}&user_id=${encodeURIComponent(userId)}&picture=${encodeURIComponent(picture)}&notes=${encodeURIComponent(notesBase64)}&folders=${encodeURIComponent(foldersBase64)}`;
           window.location.href = deepLink;
         }else if (response.trim() === "success") {
-          window.location.href = "/project/profile/user-page.php";
+          window.location.href = "../profile/user-page.php";
         } else if (response.trim() === "unverified") {
           alert("Please verify your email before logging in.");
         } else {
